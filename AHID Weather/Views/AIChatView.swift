@@ -43,7 +43,6 @@ struct AIChatView: View {
                 TextField("What should I wear today?", text: $inputText)
                     .textFieldStyle(.plain)
                     .font(.system(size: 11, design: .monospaced))
-                    .tracking(0.5)
                     .foregroundColor(ThemeColors.white)
                     .padding(10)
                     .background(ThemeColors.void3)

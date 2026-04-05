@@ -105,8 +105,7 @@ struct ForecastView: View {
                 statItem("PRECIP", "\(day.precipChance)%")
                 Text(" · ").foregroundColor(ThemeColors.whiteDim)
                 statItem("UV", String(format: "%.1f", day.uvMax))
-                Text(" · ").foregroundColor(ThemeColors.whiteDim)
-                Text("☀ \(day.sunrise)–\(day.sunset)")
+                Text(" · ☀ \(day.sunrise)–\(day.sunset)")
                     .foregroundColor(ThemeColors.whiteDim)
             }
             .font(.system(size: 10, design: .monospaced))

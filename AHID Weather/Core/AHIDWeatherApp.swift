@@ -9,7 +9,6 @@ struct AHIDWeatherApp: App {
                 .background(Color(red: 0.03, green: 0.03, blue: 0.03))
         }
         .windowStyle(.titleBar)
-        .defaultSize(width: 1400, height: 900)
         .commands {
             CommandGroup(replacing: .newItem) { }
 

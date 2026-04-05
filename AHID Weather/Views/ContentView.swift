@@ -71,112 +71,108 @@ struct ContentView: View {
     private var mainContent: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
-                HeaderView(vm: vm)
-                LocationBlockView(vm: vm)
-
-                // Error banner
-                if let error = vm.errorMessage {
-                    Text("DATA ERROR: \(error)")
-                        .font(.system(size: 10, design: .monospaced))
-                        .tracking(1)
-                        .foregroundColor(.red)
-                        .padding(12)
-                        .background(Color.red.opacity(0.1))
-                        .overlay(Rectangle().stroke(Color.red.opacity(0.3), lineWidth: 1))
-                }
-
-                // Current Conditions
-                if vm.showConditions {
-                    SectionHeader(title: "CURRENT CONDITIONS", isCollapsed: $conditionsCollapsed)
-                    if !conditionsCollapsed {
-                        CurrentConditionsView(vm: vm)
-                            .transition(.opacity)
-                    }
-                }
-
-                // Alerts
-                if vm.showAlerts {
-                    SectionHeader(title: "WEATHER ALERTS", isCollapsed: $alertsCollapsed)
-                    if !alertsCollapsed {
-                        AlertsView(alerts: vm.alerts)
-                            .transition(.opacity)
-                    }
-                }
-
-                // Data Metrics
-                if vm.showMetrics {
-                    SectionHeader(title: "DATA METRICS", isCollapsed: $metricsCollapsed)
-                    if !metricsCollapsed {
-                        MetricsGridView(vm: vm)
-                            .transition(.opacity)
-                    }
-                }
-
-                // Hourly
-                if vm.showHourly {
-                    SectionHeader(title: "24-HOUR FORECAST", isCollapsed: $hourlyCollapsed)
-                    if !hourlyCollapsed {
-                        HourlyForecastView(items: vm.hourlyItems)
-                            .transition(.opacity)
-                    }
-                }
-
-                // Radar & Forecast
-                if vm.showRadar {
-                    SectionHeader(title: "RADAR & 7-DAY FORECAST", isCollapsed: $radarCollapsed)
-                    if !radarCollapsed {
-                        HStack(alignment: .top, spacing: 16) {
-                            RadarMapView(vm: vm)
-                                .frame(maxWidth: .infinity)
-                            ForecastView(vm: vm)
-                                .frame(maxWidth: .infinity)
-                        }
-                        .transition(.opacity)
-                    }
-                }
-
-                // AI Chat
-                if vm.showAI {
-                    SectionHeader(title: "AI ASSISTANT", isCollapsed: $aiCollapsed)
-                    if !aiCollapsed {
-                        AIChatView(vm: vm)
-                            .transition(.opacity)
-                    }
-                }
-
-                // Quote
-                Text(vm.quote)
-                    .font(.system(size: 12, weight: .light, design: .default))
-                    .italic()
-                    .foregroundColor(ThemeColors.white.opacity(0.2))
-                    .tracking(1)
-                    .frame(maxWidth: .infinity)
-                    .padding(.vertical, 12)
-
-                // Footer
-                HStack {
-                    Text("AHID // WEATHER SYSTEM · OPEN-METEO + RAINVIEWER + AI")
-                        .font(.system(size: 9, design: .monospaced))
-                        .tracking(2)
-                        .foregroundColor(ThemeColors.whiteDim)
-
-                    Spacer()
-
-                    Text("A ZZZerosworld INTERFACE")
-                        .font(.system(size: 9, design: .monospaced))
-                        .tracking(2)
-                        .foregroundColor(ThemeColors.accentBright)
-                }
-                .padding(.top, 16)
-                .overlay(alignment: .top) {
-                    Rectangle()
-                        .fill(ThemeColors.accent.opacity(0.2))
-                        .frame(height: 1)
-                }
+                topSections
+                bottomSections
+                footerSection
             }
             .padding(24)
         }
         .background(ThemeColors.void0)
+    }
+
+    @ViewBuilder
+    private var topSections: some View {
+        HeaderView(vm: vm)
+        LocationBlockView(vm: vm)
+
+        if let error = vm.errorMessage {
+            Text("DATA ERROR: \(error)")
+                .font(.system(size: 10, design: .monospaced))
+                .tracking(1)
+                .foregroundColor(.red)
+                .padding(12)
+                .background(Color.red.opacity(0.1))
+                .overlay(Rectangle().stroke(Color.red.opacity(0.3), lineWidth: 1))
+        }
+
+        if vm.showConditions {
+            SectionHeader(title: "CURRENT CONDITIONS", isCollapsed: $conditionsCollapsed)
+            if !conditionsCollapsed {
+                CurrentConditionsView(vm: vm).transition(.opacity)
+            }
+        }
+
+        if vm.showAlerts {
+            SectionHeader(title: "WEATHER ALERTS", isCollapsed: $alertsCollapsed)
+            if !alertsCollapsed {
+                AlertsView(alerts: vm.alerts).transition(.opacity)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var bottomSections: some View {
+        if vm.showMetrics {
+            SectionHeader(title: "DATA METRICS", isCollapsed: $metricsCollapsed)
+            if !metricsCollapsed {
+                MetricsGridView(vm: vm).transition(.opacity)
+            }
+        }
+
+        if vm.showHourly {
+            SectionHeader(title: "24-HOUR FORECAST", isCollapsed: $hourlyCollapsed)
+            if !hourlyCollapsed {
+                HourlyForecastView(items: vm.hourlyItems).transition(.opacity)
+            }
+        }
+
+        if vm.showRadar {
+            SectionHeader(title: "RADAR & 7-DAY FORECAST", isCollapsed: $radarCollapsed)
+            if !radarCollapsed {
+                HStack(alignment: .top, spacing: 16) {
+                    RadarMapView(vm: vm).frame(maxWidth: .infinity)
+                    ForecastView(vm: vm).frame(maxWidth: .infinity)
+                }
+                .transition(.opacity)
+            }
+        }
+
+        if vm.showAI {
+            SectionHeader(title: "AI ASSISTANT", isCollapsed: $aiCollapsed)
+            if !aiCollapsed {
+                AIChatView(vm: vm).transition(.opacity)
+            }
+        }
+    }
+
+    private var footerSection: some View {
+        VStack(spacing: 0) {
+            Text(vm.quote)
+                .font(.system(size: 12, weight: .light, design: .default))
+                .italic()
+                .foregroundColor(ThemeColors.white.opacity(0.2))
+                .tracking(1)
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 12)
+
+            HStack {
+                Text("AHID // WEATHER SYSTEM · OPEN-METEO + RAINVIEWER + AI")
+                    .font(.system(size: 9, design: .monospaced))
+                    .tracking(2)
+                    .foregroundColor(ThemeColors.whiteDim)
+                Spacer()
+                Text("A ZZZerosworld INTERFACE")
+                    .font(.system(size: 9, design: .monospaced))
+                    .tracking(2)
+                    .foregroundColor(ThemeColors.accentBright)
+            }
+            .padding(.top, 16)
+            .overlay(alignment: .top) {
+                Rectangle()
+                    .fill(ThemeColors.accent.opacity(0.2))
+                    .frame(height: 1)
+            }
+        }
     }
 
     // MARK: - Background Orbs

@@ -17,8 +17,22 @@
 		729936212F81AAB100D03F70 /* AHID_WeatherUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729936202F81AAB100D03F70 /* AHID_WeatherUITestsLaunchTests.swift */; };
 		729936512F81D56900D03F70 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729936502F81D56900D03F70 /* ContentView.swift */; };
 		729936562F81D66C00D03F70 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729936552F81D66C00D03F70 /* SettingsView.swift */; };
-		729936582F81D69D00D03F70 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729936572F81D69D00D03F70 /* WebView.swift */; };
 		7299365B2F821A7600D03F70 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 7299365A2F821A7600D03F70 /* index.html */; };
+		7299365D2F822DBF00D03F70 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7299365C2F822DBF00D03F70 /* WebView.swift */; };
+		AA0001000000000000000002 /* AlertsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0001000000000000000001 /* AlertsView.swift */; };
+		AA0001000000000000000004 /* AIChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0001000000000000000003 /* AIChatView.swift */; };
+		AA0001000000000000000006 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0001000000000000000005 /* HeaderView.swift */; };
+		AA0001000000000000000008 /* ForecastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0001000000000000000007 /* ForecastView.swift */; };
+		AA000100000000000000000A /* CurrentConditionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0001000000000000000009 /* CurrentConditionsView.swift */; };
+		AA000100000000000000000C /* RadarMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000100000000000000000B /* RadarMapView.swift */; };
+		AA000100000000000000000E /* MetricsGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000100000000000000000D /* MetricsGridView.swift */; };
+		AA0001000000000000000010 /* HourlyForecastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000100000000000000000F /* HourlyForecastView.swift */; };
+		AA0001000000000000000012 /* WeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0001000000000000000011 /* WeatherViewModel.swift */; };
+		AA0001000000000000000014 /* AIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0001000000000000000013 /* AIService.swift */; };
+		AA0001000000000000000016 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0001000000000000000015 /* WeatherService.swift */; };
+		AA0001000000000000000018 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0001000000000000000017 /* LocationService.swift */; };
+		AA000100000000000000001A /* WeatherModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0001000000000000000019 /* WeatherModels.swift */; };
+		AA000100000000000000001C /* WeatherHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000100000000000000001B /* WeatherHelpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,8 +68,22 @@
 		729936332F81BA8800D03F70 /* AHID-Weather-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "AHID-Weather-Info.plist"; sourceTree = SOURCE_ROOT; };
 		729936502F81D56900D03F70 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		729936552F81D66C00D03F70 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		729936572F81D69D00D03F70 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		7299365A2F821A7600D03F70 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+		7299365C2F822DBF00D03F70 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		AA0001000000000000000001 /* AlertsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsView.swift; sourceTree = "<group>"; };
+		AA0001000000000000000003 /* AIChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIChatView.swift; sourceTree = "<group>"; };
+		AA0001000000000000000005 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		AA0001000000000000000007 /* ForecastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastView.swift; sourceTree = "<group>"; };
+		AA0001000000000000000009 /* CurrentConditionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentConditionsView.swift; sourceTree = "<group>"; };
+		AA000100000000000000000B /* RadarMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadarMapView.swift; sourceTree = "<group>"; };
+		AA000100000000000000000D /* MetricsGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricsGridView.swift; sourceTree = "<group>"; };
+		AA000100000000000000000F /* HourlyForecastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HourlyForecastView.swift; sourceTree = "<group>"; };
+		AA0001000000000000000011 /* WeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModel.swift; sourceTree = "<group>"; };
+		AA0001000000000000000013 /* AIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIService.swift; sourceTree = "<group>"; };
+		AA0001000000000000000015 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
+		AA0001000000000000000017 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		AA0001000000000000000019 /* WeatherModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModels.swift; sourceTree = "<group>"; };
+		AA000100000000000000001B /* WeatherHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherHelpers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +136,10 @@
 			children = (
 				729936592F81D6C000D03F70 /* Core */,
 				729936522F81D5C700D03F70 /* Views */,
+				AA000100000000000000001D /* ViewModels */,
+				AA000100000000000000001E /* Services */,
+				AA000100000000000000001F /* Models */,
+				AA0001000000000000000020 /* Helpers */,
 				729936332F81BA8800D03F70 /* AHID-Weather-Info.plist */,
 				729936012F81AAB000D03F70 /* Assets.xcassets */,
 				7299360B2F81AAB000D03F70 /* AHID_Weather.entitlements */,
@@ -146,8 +178,16 @@
 			isa = PBXGroup;
 			children = (
 				729936552F81D66C00D03F70 /* SettingsView.swift */,
-				729936572F81D69D00D03F70 /* WebView.swift */,
+				7299365C2F822DBF00D03F70 /* WebView.swift */,
 				729936502F81D56900D03F70 /* ContentView.swift */,
+				AA0001000000000000000001 /* AlertsView.swift */,
+				AA0001000000000000000003 /* AIChatView.swift */,
+				AA0001000000000000000005 /* HeaderView.swift */,
+				AA0001000000000000000007 /* ForecastView.swift */,
+				AA0001000000000000000009 /* CurrentConditionsView.swift */,
+				AA000100000000000000000B /* RadarMapView.swift */,
+				AA000100000000000000000D /* MetricsGridView.swift */,
+				AA000100000000000000000F /* HourlyForecastView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -160,6 +200,40 @@
 				7299365A2F821A7600D03F70 /* index.html */,
 			);
 			path = Core;
+			sourceTree = "<group>";
+		};
+		AA000100000000000000001D /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				AA0001000000000000000011 /* WeatherViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		AA000100000000000000001E /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				AA0001000000000000000013 /* AIService.swift */,
+				AA0001000000000000000015 /* WeatherService.swift */,
+				AA0001000000000000000017 /* LocationService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		AA000100000000000000001F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AA0001000000000000000019 /* WeatherModels.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		AA0001000000000000000020 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				AA000100000000000000001B /* WeatherHelpers.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -296,9 +370,23 @@
 				729936072F81AAB000D03F70 /* Persistence.swift in Sources */,
 				7299360A2F81AAB000D03F70 /* AHID_Weather.xcdatamodeld in Sources */,
 				729936562F81D66C00D03F70 /* SettingsView.swift in Sources */,
-				729936582F81D69D00D03F70 /* WebView.swift in Sources */,
+				7299365D2F822DBF00D03F70 /* WebView.swift in Sources */,
 				729936512F81D56900D03F70 /* ContentView.swift in Sources */,
 				729935FE2F81AAAF00D03F70 /* AHIDWeatherApp.swift in Sources */,
+				AA0001000000000000000002 /* AlertsView.swift in Sources */,
+				AA0001000000000000000004 /* AIChatView.swift in Sources */,
+				AA0001000000000000000006 /* HeaderView.swift in Sources */,
+				AA0001000000000000000008 /* ForecastView.swift in Sources */,
+				AA000100000000000000000A /* CurrentConditionsView.swift in Sources */,
+				AA000100000000000000000C /* RadarMapView.swift in Sources */,
+				AA000100000000000000000E /* MetricsGridView.swift in Sources */,
+				AA0001000000000000000010 /* HourlyForecastView.swift in Sources */,
+				AA0001000000000000000012 /* WeatherViewModel.swift in Sources */,
+				AA0001000000000000000014 /* AIService.swift in Sources */,
+				AA0001000000000000000016 /* WeatherService.swift in Sources */,
+				AA0001000000000000000018 /* LocationService.swift in Sources */,
+				AA000100000000000000001A /* WeatherModels.swift in Sources */,
+				AA000100000000000000001C /* WeatherHelpers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -374,7 +462,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_OPTIMIZATION_LEVEL = z;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -391,7 +479,9 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -433,6 +523,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = z;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -442,9 +533,11 @@
 				MACOSX_DEPLOYMENT_TARGET = 12.7;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -453,6 +546,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_USE_OPTIMIZATION_PROFILE = YES;
 				CODE_SIGN_ENTITLEMENTS = "AHID Weather/AHID_Weather.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -472,8 +566,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "Foundation.AHID-Weather";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -482,6 +580,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_USE_OPTIMIZATION_PROFILE = YES;
 				CODE_SIGN_ENTITLEMENTS = "AHID Weather/AHID_Weather.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -501,8 +600,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "Foundation.AHID-Weather";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
