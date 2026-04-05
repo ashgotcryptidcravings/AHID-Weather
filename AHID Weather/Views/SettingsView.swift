@@ -1,6 +1,16 @@
 import SwiftUI
 import WebKit
 
+private extension Color {
+    static var settingsCardBackground: Color {
+        #if canImport(UIKit)
+        return Color(UIColor.secondarySystemBackground).opacity(0.6)
+        #else
+        return Color(NSColor.controlBackgroundColor).opacity(0.6)
+        #endif
+    }
+}
+
 struct SettingsView: View {
     var body: some View {
         TabView {
@@ -19,7 +29,9 @@ struct SettingsView: View {
             DebugView()
                 .tabItem { Label("Debug",     systemImage: "ladybug") }
         }
+        #if os(macOS)
         .frame(width: 580, height: 520)
+        #endif
     }
 }
 
@@ -148,7 +160,7 @@ struct APIKeysSettingsView: View {
             }
         }
         .padding(12)
-        .background(Color(NSColor.controlBackgroundColor).opacity(0.5))
+        .background(Color.settingsCardBackground)
         .cornerRadius(8)
     }
 
@@ -199,7 +211,7 @@ struct WidgetSettingsView: View {
             Toggle("", isOn: isOn).toggleStyle(.switch)
         }
         .padding(10)
-        .background(Color(NSColor.controlBackgroundColor).opacity(0.5))
+        .background(Color.settingsCardBackground)
         .cornerRadius(6)
     }
 }
@@ -295,8 +307,8 @@ struct ChangelogView: View {
             "Feels-like context label (HOT FEEL / COLD FEEL / NEAR ACTUAL)",
             "Dew point comfort labeling (DRY / COMFORTABLE / PLEASANT / HUMID / OPPRESSIVE)",
             "Hourly API now fetches feels-like, humidity, wind direction, and surface pressure per hour",
-            "WeatherKit entitlement confirmed present; Open-Meteo remains primary (WeatherKit requires macOS 13+)",
-            "macOS 12 Monterey / Xcode 14.2 compatibility maintained throughout"
+            "WeatherKit entitlement confirmed present; Open-Meteo remains primary (WeatherKit availability depends on OS/API support)",
+            "iOS + macOS compatibility maintained, including Xcode 14.2 toolchains"
         ]),
         Entry(version: "1.0", date: "Early 2025", notes: [
             "Initial release — Open-Meteo weather, RainViewer radar map, AI chat (Claude / Gemini / GPT)",
@@ -332,7 +344,7 @@ struct ChangelogView: View {
                         }
                     }
                     .padding(14)
-                    .background(Color(NSColor.controlBackgroundColor).opacity(0.5))
+                    .background(Color.settingsCardBackground)
                     .cornerRadius(8)
                 }
             }
@@ -350,7 +362,7 @@ struct DebugView: View {
             VStack(alignment: .leading, spacing: 15) {
                 Text("Device & Session Info").font(.headline)
                 VStack(spacing: 8) {
-                    infoRow("macOS Version", ProcessInfo.processInfo.operatingSystemVersionString)
+                    infoRow("OS Version", ProcessInfo.processInfo.operatingSystemVersionString)
                     infoRow("App Version",   Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "2.0")
                     infoRow("Build",         Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "2")
                     infoRow("Bundle ID",     Bundle.main.bundleIdentifier ?? "—")
@@ -430,10 +442,10 @@ struct DebugView: View {
     }
 
     private func weatherKitStatus() -> String {
-        if #available(macOS 13.0, *) {
-            return "Entitlement present · macOS 13+ eligible"
+        if #available(iOS 16.0, macOS 13.0, *) {
+            return "Entitlement present · OS/API requirements met"
         } else {
-            return "Entitlement present · Requires macOS 13+"
+            return "Entitlement present · Limited by OS/API availability"
         }
     }
 

@@ -3,6 +3,12 @@ import SwiftUI
 @main
 struct AHIDWeatherApp: App {
     var body: some Scene {
+        #if os(iOS)
+        WindowGroup {
+            ContentView()
+                .background(Color(red: 0.03, green: 0.03, blue: 0.03))
+        }
+        #else
         WindowGroup {
             ContentView()
                 .frame(minWidth: 900, minHeight: 700)
@@ -23,6 +29,7 @@ struct AHIDWeatherApp: App {
         Settings {
             SettingsView()
         }
+        #endif
     }
 }
 
