@@ -1,0 +1,636 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		729935FE2F81AAAF00D03F70 /* AHIDWeatherApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729935FD2F81AAAF00D03F70 /* AHIDWeatherApp.swift */; };
+		729936022F81AAB000D03F70 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 729936012F81AAB000D03F70 /* Assets.xcassets */; };
+		729936052F81AAB000D03F70 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 729936042F81AAB000D03F70 /* Preview Assets.xcassets */; };
+		729936072F81AAB000D03F70 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729936062F81AAB000D03F70 /* Persistence.swift */; };
+		7299360A2F81AAB000D03F70 /* AHID_Weather.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 729936082F81AAB000D03F70 /* AHID_Weather.xcdatamodeld */; };
+		729936152F81AAB100D03F70 /* AHID_WeatherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729936142F81AAB100D03F70 /* AHID_WeatherTests.swift */; };
+		7299361F2F81AAB100D03F70 /* AHID_WeatherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7299361E2F81AAB100D03F70 /* AHID_WeatherUITests.swift */; };
+		729936212F81AAB100D03F70 /* AHID_WeatherUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729936202F81AAB100D03F70 /* AHID_WeatherUITestsLaunchTests.swift */; };
+		729936512F81D56900D03F70 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729936502F81D56900D03F70 /* ContentView.swift */; };
+		729936562F81D66C00D03F70 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729936552F81D66C00D03F70 /* SettingsView.swift */; };
+		729936582F81D69D00D03F70 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729936572F81D69D00D03F70 /* WebView.swift */; };
+		7299365B2F821A7600D03F70 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 7299365A2F821A7600D03F70 /* index.html */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		729936112F81AAB100D03F70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 729935F22F81AAAF00D03F70 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 729935F92F81AAAF00D03F70;
+			remoteInfo = "AHID Weather";
+		};
+		7299361B2F81AAB100D03F70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 729935F22F81AAAF00D03F70 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 729935F92F81AAAF00D03F70;
+			remoteInfo = "AHID Weather";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		729935FA2F81AAAF00D03F70 /* AHID Weather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AHID Weather.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		729935FD2F81AAAF00D03F70 /* AHIDWeatherApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AHIDWeatherApp.swift; sourceTree = "<group>"; };
+		729936012F81AAB000D03F70 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		729936042F81AAB000D03F70 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		729936062F81AAB000D03F70 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		729936092F81AAB000D03F70 /* AHID_Weather.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AHID_Weather.xcdatamodel; sourceTree = "<group>"; };
+		7299360B2F81AAB000D03F70 /* AHID_Weather.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AHID_Weather.entitlements; sourceTree = "<group>"; };
+		729936102F81AAB100D03F70 /* AHID WeatherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AHID WeatherTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		729936142F81AAB100D03F70 /* AHID_WeatherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AHID_WeatherTests.swift; sourceTree = "<group>"; };
+		7299361A2F81AAB100D03F70 /* AHID WeatherUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AHID WeatherUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7299361E2F81AAB100D03F70 /* AHID_WeatherUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AHID_WeatherUITests.swift; sourceTree = "<group>"; };
+		729936202F81AAB100D03F70 /* AHID_WeatherUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AHID_WeatherUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		729936332F81BA8800D03F70 /* AHID-Weather-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "AHID-Weather-Info.plist"; sourceTree = SOURCE_ROOT; };
+		729936502F81D56900D03F70 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		729936552F81D66C00D03F70 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		729936572F81D69D00D03F70 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
+		7299365A2F821A7600D03F70 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		729935F72F81AAAF00D03F70 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7299360D2F81AAB100D03F70 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		729936172F81AAB100D03F70 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		729935F12F81AAAF00D03F70 = {
+			isa = PBXGroup;
+			children = (
+				729935FC2F81AAAF00D03F70 /* AHID Weather */,
+				729936132F81AAB100D03F70 /* AHID WeatherTests */,
+				7299361D2F81AAB100D03F70 /* AHID WeatherUITests */,
+				729935FB2F81AAAF00D03F70 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		729935FB2F81AAAF00D03F70 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				729935FA2F81AAAF00D03F70 /* AHID Weather.app */,
+				729936102F81AAB100D03F70 /* AHID WeatherTests.xctest */,
+				7299361A2F81AAB100D03F70 /* AHID WeatherUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		729935FC2F81AAAF00D03F70 /* AHID Weather */ = {
+			isa = PBXGroup;
+			children = (
+				729936592F81D6C000D03F70 /* Core */,
+				729936522F81D5C700D03F70 /* Views */,
+				729936332F81BA8800D03F70 /* AHID-Weather-Info.plist */,
+				729936012F81AAB000D03F70 /* Assets.xcassets */,
+				7299360B2F81AAB000D03F70 /* AHID_Weather.entitlements */,
+				729936082F81AAB000D03F70 /* AHID_Weather.xcdatamodeld */,
+				729936032F81AAB000D03F70 /* Preview Content */,
+			);
+			path = "AHID Weather";
+			sourceTree = "<group>";
+		};
+		729936032F81AAB000D03F70 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				729936042F81AAB000D03F70 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		729936132F81AAB100D03F70 /* AHID WeatherTests */ = {
+			isa = PBXGroup;
+			children = (
+				729936142F81AAB100D03F70 /* AHID_WeatherTests.swift */,
+			);
+			path = "AHID WeatherTests";
+			sourceTree = "<group>";
+		};
+		7299361D2F81AAB100D03F70 /* AHID WeatherUITests */ = {
+			isa = PBXGroup;
+			children = (
+				7299361E2F81AAB100D03F70 /* AHID_WeatherUITests.swift */,
+				729936202F81AAB100D03F70 /* AHID_WeatherUITestsLaunchTests.swift */,
+			);
+			path = "AHID WeatherUITests";
+			sourceTree = "<group>";
+		};
+		729936522F81D5C700D03F70 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				729936552F81D66C00D03F70 /* SettingsView.swift */,
+				729936572F81D69D00D03F70 /* WebView.swift */,
+				729936502F81D56900D03F70 /* ContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		729936592F81D6C000D03F70 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				729936062F81AAB000D03F70 /* Persistence.swift */,
+				729935FD2F81AAAF00D03F70 /* AHIDWeatherApp.swift */,
+				7299365A2F821A7600D03F70 /* index.html */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		729935F92F81AAAF00D03F70 /* AHID Weather */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 729936242F81AAB100D03F70 /* Build configuration list for PBXNativeTarget "AHID Weather" */;
+			buildPhases = (
+				729935F62F81AAAF00D03F70 /* Sources */,
+				729935F72F81AAAF00D03F70 /* Frameworks */,
+				729935F82F81AAAF00D03F70 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "AHID Weather";
+			productName = "AHID Weather";
+			productReference = 729935FA2F81AAAF00D03F70 /* AHID Weather.app */;
+			productType = "com.apple.product-type.application";
+		};
+		7299360F2F81AAB100D03F70 /* AHID WeatherTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 729936272F81AAB100D03F70 /* Build configuration list for PBXNativeTarget "AHID WeatherTests" */;
+			buildPhases = (
+				7299360C2F81AAB100D03F70 /* Sources */,
+				7299360D2F81AAB100D03F70 /* Frameworks */,
+				7299360E2F81AAB100D03F70 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				729936122F81AAB100D03F70 /* PBXTargetDependency */,
+			);
+			name = "AHID WeatherTests";
+			productName = "AHID WeatherTests";
+			productReference = 729936102F81AAB100D03F70 /* AHID WeatherTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		729936192F81AAB100D03F70 /* AHID WeatherUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7299362A2F81AAB100D03F70 /* Build configuration list for PBXNativeTarget "AHID WeatherUITests" */;
+			buildPhases = (
+				729936162F81AAB100D03F70 /* Sources */,
+				729936172F81AAB100D03F70 /* Frameworks */,
+				729936182F81AAB100D03F70 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7299361C2F81AAB100D03F70 /* PBXTargetDependency */,
+			);
+			name = "AHID WeatherUITests";
+			productName = "AHID WeatherUITests";
+			productReference = 7299361A2F81AAB100D03F70 /* AHID WeatherUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		729935F22F81AAAF00D03F70 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1420;
+				LastUpgradeCheck = 1420;
+				TargetAttributes = {
+					729935F92F81AAAF00D03F70 = {
+						CreatedOnToolsVersion = 14.2;
+					};
+					7299360F2F81AAB100D03F70 = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = 729935F92F81AAAF00D03F70;
+					};
+					729936192F81AAB100D03F70 = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = 729935F92F81AAAF00D03F70;
+					};
+				};
+			};
+			buildConfigurationList = 729935F52F81AAAF00D03F70 /* Build configuration list for PBXProject "AHID Weather" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 729935F12F81AAAF00D03F70;
+			productRefGroup = 729935FB2F81AAAF00D03F70 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				729935F92F81AAAF00D03F70 /* AHID Weather */,
+				7299360F2F81AAB100D03F70 /* AHID WeatherTests */,
+				729936192F81AAB100D03F70 /* AHID WeatherUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		729935F82F81AAAF00D03F70 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7299365B2F821A7600D03F70 /* index.html in Resources */,
+				729936052F81AAB000D03F70 /* Preview Assets.xcassets in Resources */,
+				729936022F81AAB000D03F70 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7299360E2F81AAB100D03F70 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		729936182F81AAB100D03F70 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		729935F62F81AAAF00D03F70 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				729936072F81AAB000D03F70 /* Persistence.swift in Sources */,
+				7299360A2F81AAB000D03F70 /* AHID_Weather.xcdatamodeld in Sources */,
+				729936562F81D66C00D03F70 /* SettingsView.swift in Sources */,
+				729936582F81D69D00D03F70 /* WebView.swift in Sources */,
+				729936512F81D56900D03F70 /* ContentView.swift in Sources */,
+				729935FE2F81AAAF00D03F70 /* AHIDWeatherApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7299360C2F81AAB100D03F70 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				729936152F81AAB100D03F70 /* AHID_WeatherTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		729936162F81AAB100D03F70 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7299361F2F81AAB100D03F70 /* AHID_WeatherUITests.swift in Sources */,
+				729936212F81AAB100D03F70 /* AHID_WeatherUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		729936122F81AAB100D03F70 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 729935F92F81AAAF00D03F70 /* AHID Weather */;
+			targetProxy = 729936112F81AAB100D03F70 /* PBXContainerItemProxy */;
+		};
+		7299361C2F81AAB100D03F70 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 729935F92F81AAAF00D03F70 /* AHID Weather */;
+			targetProxy = 7299361B2F81AAB100D03F70 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		729936222F81AAB100D03F70 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.7;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		729936232F81AAB100D03F70 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.7;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		729936252F81AAB100D03F70 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "AHID Weather/AHID_Weather.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"AHID Weather/Preview Content\"";
+				DEVELOPMENT_TEAM = PULJN6655X;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "AHID-Weather-Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Foundation.AHID-Weather";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		729936262F81AAB100D03F70 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "AHID Weather/AHID_Weather.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"AHID Weather/Preview Content\"";
+				DEVELOPMENT_TEAM = PULJN6655X;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "AHID-Weather-Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Foundation.AHID-Weather";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		729936282F81AAB100D03F70 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PULJN6655X;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.7;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Foundation.AHID-WeatherTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AHID Weather.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AHID Weather";
+			};
+			name = Debug;
+		};
+		729936292F81AAB100D03F70 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PULJN6655X;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 12.7;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Foundation.AHID-WeatherTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AHID Weather.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AHID Weather";
+			};
+			name = Release;
+		};
+		7299362B2F81AAB100D03F70 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PULJN6655X;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Foundation.AHID-WeatherUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "AHID Weather";
+			};
+			name = Debug;
+		};
+		7299362C2F81AAB100D03F70 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PULJN6655X;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Foundation.AHID-WeatherUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "AHID Weather";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		729935F52F81AAAF00D03F70 /* Build configuration list for PBXProject "AHID Weather" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				729936222F81AAB100D03F70 /* Debug */,
+				729936232F81AAB100D03F70 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		729936242F81AAB100D03F70 /* Build configuration list for PBXNativeTarget "AHID Weather" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				729936252F81AAB100D03F70 /* Debug */,
+				729936262F81AAB100D03F70 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		729936272F81AAB100D03F70 /* Build configuration list for PBXNativeTarget "AHID WeatherTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				729936282F81AAB100D03F70 /* Debug */,
+				729936292F81AAB100D03F70 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7299362A2F81AAB100D03F70 /* Build configuration list for PBXNativeTarget "AHID WeatherUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7299362B2F81AAB100D03F70 /* Debug */,
+				7299362C2F81AAB100D03F70 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		729936082F81AAB000D03F70 /* AHID_Weather.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				729936092F81AAB000D03F70 /* AHID_Weather.xcdatamodel */,
+			);
+			currentVersion = 729936092F81AAB000D03F70 /* AHID_Weather.xcdatamodel */;
+			path = AHID_Weather.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 729935F22F81AAAF00D03F70 /* Project object */;
+}
