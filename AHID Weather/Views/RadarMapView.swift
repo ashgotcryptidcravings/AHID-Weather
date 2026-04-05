@@ -1,20 +1,50 @@
 import SwiftUI
 import MapKit
 
+#if canImport(UIKit)
+typealias PlatformMapRepresentable = UIViewRepresentable
+typealias PlatformColor = UIColor
+#elseif canImport(AppKit)
+typealias PlatformMapRepresentable = NSViewRepresentable
+typealias PlatformColor = NSColor
+#endif
+
 // MARK: - MKMapView wrapper with tile overlay support
-struct RadarNSMapView: NSViewRepresentable {
+struct RadarMapRepresentable: PlatformMapRepresentable {
     let center: CLLocationCoordinate2D
     let tileURLTemplate: String?
     let tileOpacity: Double
 
     func makeCoordinator() -> Coordinator { Coordinator() }
 
+    #if canImport(UIKit)
+    func makeUIView(context: Context) -> MKMapView {
+        configuredMapView(context: context)
+    }
+
+    func updateUIView(_ mv: MKMapView, context: Context) {
+        updateMapView(mv, context: context)
+    }
+    #elseif canImport(AppKit)
     func makeNSView(context: Context) -> MKMapView {
+        configuredMapView(context: context)
+    }
+
+    func updateNSView(_ mv: MKMapView, context: Context) {
+        updateMapView(mv, context: context)
+    }
+    #endif
+
+    private func configuredMapView(context: Context) -> MKMapView {
         let mv = MKMapView()
         mv.delegate = context.coordinator
-        mv.appearance = NSAppearance(named: .darkAqua)
         mv.showsCompass = false
         mv.showsScale = false
+
+        #if canImport(AppKit)
+        mv.appearance = NSAppearance(named: .darkAqua)
+        #endif
+
         let region = MKCoordinateRegion(
             center: center,
             span: MKCoordinateSpan(latitudeDelta: 4, longitudeDelta: 4)
@@ -30,7 +60,7 @@ struct RadarNSMapView: NSViewRepresentable {
         return mv
     }
 
-    func updateNSView(_ mv: MKMapView, context: Context) {
+    private func updateMapView(_ mv: MKMapView, context: Context) {
         // Update annotation position if center changed
         context.coordinator.annotation?.coordinate = center
 
@@ -38,10 +68,9 @@ struct RadarNSMapView: NSViewRepresentable {
         let newTemplate = tileURLTemplate ?? ""
         if context.coordinator.currentTemplate != newTemplate {
             context.coordinator.currentTemplate = newTemplate
-            // Remove old overlays
             mv.removeOverlays(mv.overlays)
             context.coordinator.tileRenderer = nil
-            // Add new overlay if we have a template
+
             if !newTemplate.isEmpty {
                 let overlay = MKTileOverlay(urlTemplate: newTemplate)
                 overlay.canReplaceMapContent = false
@@ -49,7 +78,6 @@ struct RadarNSMapView: NSViewRepresentable {
             }
         }
 
-        // Update opacity live if slider changed
         context.coordinator.tileRenderer?.alpha = CGFloat(tileOpacity)
     }
 
@@ -62,8 +90,6 @@ struct RadarNSMapView: NSViewRepresentable {
         func mapView(_ mv: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
             if let tile = overlay as? MKTileOverlay {
                 let renderer = MKTileOverlayRenderer(tileOverlay: tile)
-                // tileOpacity is captured via updateNSView after creation;
-                // set an initial value from the stored renderer reference
                 renderer.alpha = tileRenderer?.alpha ?? 0.7
                 tileRenderer = renderer
                 return renderer
@@ -76,7 +102,7 @@ struct RadarNSMapView: NSViewRepresentable {
             let view = mv.dequeueReusableAnnotationView(withIdentifier: id) as? MKMarkerAnnotationView
                 ?? MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: id)
             view.annotation = annotation
-            view.markerTintColor = NSColor(red: 0.659, green: 0.333, blue: 0.969, alpha: 1)
+            view.markerTintColor = PlatformColor(red: 0.659, green: 0.333, blue: 0.969, alpha: 1)
             view.glyphImage = nil
             view.canShowCallout = false
             return view
@@ -132,7 +158,7 @@ struct RadarMapView: View {
 
             // Map
             ZStack {
-                RadarNSMapView(
+                RadarMapRepresentable(
                     center: CLLocationCoordinate2D(
                         latitude: vm.locationService.latitude,
                         longitude: vm.locationService.longitude
