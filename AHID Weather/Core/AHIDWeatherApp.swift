@@ -5,12 +5,28 @@ struct AHIDWeatherApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .frame(minWidth: 800, minHeight: 600)
+                .frame(minWidth: 900, minHeight: 700)
                 .background(Color(red: 0.03, green: 0.03, blue: 0.03))
-        } 
-        // This creates the "Settings..." menu item automatically
+        }
+        .windowStyle(.titleBar)
+        .defaultSize(width: 1400, height: 900)
+        .commands {
+            CommandGroup(replacing: .newItem) { }
+
+            CommandMenu("Weather") {
+                Button("Refresh Data") {
+                    NotificationCenter.default.post(name: .refreshWeather, object: nil)
+                }
+                .keyboardShortcut("r")
+            }
+        }
+
         Settings {
             SettingsView()
         }
     }
+}
+
+extension Notification.Name {
+    static let refreshWeather = Notification.Name("refreshWeather")
 }
