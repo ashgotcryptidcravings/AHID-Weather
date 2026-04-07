@@ -253,6 +253,10 @@ enum AppError: LocalizedError, Identifiable {
     case key003_networkError(String)
     case key004_httpError(Int, String)
 
+    // Notifications
+    case notif001_permissionDenied
+    case notif002_scheduleFailed(String)
+
     var id: String { code }
 
     var code: String {
@@ -275,6 +279,8 @@ enum AppError: LocalizedError, Identifiable {
         case .key002_rateLimited:      return "KEY-002"
         case .key003_networkError:     return "KEY-003"
         case .key004_httpError:        return "KEY-004"
+        case .notif001_permissionDenied: return "NOTIF-001"
+        case .notif002_scheduleFailed:   return "NOTIF-002"
         }
     }
 
@@ -316,6 +322,10 @@ enum AppError: LocalizedError, Identifiable {
             return "[\(code)] Network error during key test: \(detail)"
         case .key004_httpError(let status, let provider):
             return "[\(code)] \(provider) returned unexpected HTTP \(status) during key test."
+        case .notif001_permissionDenied:
+            return "[\(code)] Notification permission denied. Enable notifications in System Settings."
+        case .notif002_scheduleFailed(let detail):
+            return "[\(code)] Failed to post error notification: \(detail)"
         }
     }
 
@@ -329,6 +339,8 @@ enum AppError: LocalizedError, Identifiable {
             return "Open Settings (⌘,) → API Keys and add an Anthropic, Gemini, or OpenAI key."
         case .key001_invalidKey(let provider):
             return "Log in to the \(provider) developer portal and verify or regenerate your key."
+        case .notif001_permissionDenied:
+            return "Open System Settings → Notifications → AHID Weather and enable alerts."
         default:
             return nil
         }

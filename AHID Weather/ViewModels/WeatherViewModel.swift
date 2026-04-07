@@ -13,9 +13,7 @@ class WeatherViewModel: ObservableObject {
     @Published var hourlyItems: [HourlyItem] = []
     @Published var forecastDays: [ForecastDay] = []
     @Published var pressureTrend: PressureTrend = .steady
-    @Published var chatMessages: [ChatMessage] = [
-        ChatMessage(role: .assistant, text: "Ask me anything about the current weather conditions.")
-    ]
+    @Published var chatMessages: [ChatMessage] = []
 
     @Published var isLoading: Bool = true
     @Published var loadingMessage: String = "REQUESTING LOCATION"
@@ -29,13 +27,20 @@ class WeatherViewModel: ObservableObject {
     @Published var isForecastAILoading: Bool = false
 
     // MARK: - Config
-    @AppStorage("useCelsius")      var useCelsius: Bool = false
-    @AppStorage("showConditions")  var showConditions: Bool = true
-    @AppStorage("showAlerts")      var showAlerts: Bool = true
-    @AppStorage("showMetrics")     var showMetrics: Bool = true
-    @AppStorage("showHourly")      var showHourly: Bool = true
-    @AppStorage("showRadar")       var showRadar: Bool = true
-    @AppStorage("showAI")          var showAI: Bool = true
+    @AppStorage("useCelsius")          var useCelsius: Bool = false
+    @AppStorage("showConditions")      var showConditions: Bool = true
+    @AppStorage("showAlerts")          var showAlerts: Bool = true
+    @AppStorage("showMetrics")         var showMetrics: Bool = true
+    @AppStorage("showHourly")          var showHourly: Bool = true
+    @AppStorage("showRadar")           var showRadar: Bool = true
+    @AppStorage("showAI")              var showAI: Bool = true
+    @AppStorage("autoRefreshEnabled")  var autoRefreshEnabled: Bool = true
+    @AppStorage("refreshIntervalMin")  var refreshIntervalMin: Int = 10
+    @AppStorage("aiTimeoutSeconds")    var aiTimeoutSeconds: Double = 12
+    @AppStorage("aiMaxTokens")         var aiMaxTokens: Int = 300
+    @AppStorage("verboseLogging")      var verboseLogging: Bool = false
+    @AppStorage("errorSoundEnabled")   var errorSoundEnabled: Bool = true
+    @AppStorage("errorNotifEnabled")   var errorNotifEnabled: Bool = true
 
     @AppStorage("apiKey_anthropic") var anthropicKey: String = ""
     @AppStorage("apiKey_gemini")    var geminiKey: String = ""
@@ -69,12 +74,26 @@ class WeatherViewModel: ObservableObject {
         let gotLocation = await locationService.acquireLocation()
         if !gotLocation { loadingMessage = "DEFAULT · TOLEDO" }
 
+        await ErrorNotificationService.shared.requestPermission()
         await syncAIKeys()
         await fetchWeatherData(force: true)
 
         isLoading = false
         startBackgroundRefresh()
+        observeClearChat()
     }
+
+    private func observeClearChat() {
+            NotificationCenter.default.addObserver(
+                forName: Notification.Name("AHID.clearChat"),
+                object: nil, queue: .main
+            ) { _ in
+                // Capture weak self directly inside the Task here as well
+                Task { @MainActor [weak self] in
+                    self?.chatMessages = []
+                }
+            }
+        }
 
     // MARK: - Data Fetching
     func fetchWeatherData(force: Bool = false) async {
@@ -105,7 +124,8 @@ class WeatherViewModel: ObservableObject {
 
         } catch let err as AppError {
             errorMessage = err.localizedDescription
-            print("[AHID] \(err.code): \(err.localizedDescription ?? "")")
+            print("[AHID] \(err.code): \(err.localizedDescription )")
+            ErrorNotificationService.shared.handle(err, soundEnabled: errorSoundEnabled, notifEnabled: errorNotifEnabled)
         } catch {
             errorMessage = error.localizedDescription
         }
@@ -223,24 +243,18 @@ class WeatherViewModel: ObservableObject {
         let system = "Weather analyst. 2 sentences, practical. Under 40 words. No markdown. No emoji."
         let prompt = "\(locationService.city) forecast for \(day.dateString): \(day.condition), \(day.high)/\(day.low)\(tempUnit), \(day.precipChance)% precip, UV \(String(format: "%.1f", day.uvMax))"
 
+        await syncAIKeys()
         let result = await aiService.chat(system: system, message: prompt)
 
         if selectedForecastIndex == index {
-            forecastAISummary = result ?? localForecastSummary(day)
+            if let text = result {
+                forecastAISummary = text
+            } else {
+                let hasKeys = !anthropicKey.isEmpty || !geminiKey.isEmpty || !openaiKey.isEmpty
+                forecastAISummary = hasKeys ? "[AI-002] All providers failed." : "[AI-001] No API key configured."
+            }
             isForecastAILoading = false
         }
-    }
-
-    private func localForecastSummary(_ day: ForecastDay) -> String {
-        var s = ""
-        if day.high >= 85 { s += "Hot, \(day.high)\(tempUnit). " }
-        else if day.high >= 70 { s += "\(day.high)\(tempUnit). " }
-        else if day.high >= 50 { s += "Cool, \(day.high)\(tempUnit). " }
-        else { s += "Cold, \(day.high)\(tempUnit). " }
-        s += day.condition + ". "
-        if day.precipChance > 40 { s += "\(day.precipChance)% rain. " }
-        if day.uvMax > 5 { s += "UV \(String(format: "%.1f", day.uvMax))." }
-        return s
     }
 
     // MARK: - AI Chat
@@ -251,11 +265,23 @@ class WeatherViewModel: ObservableObject {
         chatMessages.append(ChatMessage(role: .user, text: trimmed))
         isChatLoading = true
 
+        await syncAIKeys()
+
         let context = buildWeatherContext()
         let system = "AHID Weather assistant. Calm, direct, data-driven. Under 60 words. No markdown. No emoji.\n\n\(context)"
 
         let result = await aiService.chat(system: system, message: trimmed)
-        chatMessages.append(ChatMessage(role: .assistant, text: result ?? localChatResponse(trimmed)))
+        if let text = result {
+            chatMessages.append(ChatMessage(role: .assistant, text: text))
+        } else {
+            let hasKeys = !anthropicKey.isEmpty || !geminiKey.isEmpty || !openaiKey.isEmpty
+            let errorCode = hasKeys ? "AI-002" : "AI-001"
+            let errorMsg  = hasKeys
+                ? "[AI-002] All configured providers failed. Check your keys or network."
+                : "[AI-001] No AI provider key configured. Add a key in Settings → API Keys."
+            chatMessages.append(ChatMessage(role: .assistant, text: errorMsg))
+            if verboseLogging { print("[AHID Chat] \(errorCode): \(errorMsg)") }
+        }
         isChatLoading = false
     }
 
@@ -271,43 +297,6 @@ class WeatherViewModel: ObservableObject {
         """
     }
 
-    private func localChatResponse(_ query: String) -> String {
-        guard let c = currentWeather, let d = dailyWeather else { return "Weather data loading..." }
-        let t  = Int(round(c.temperature_2m))
-        let fl = Int(round(c.apparent_temperature))
-        let cond = WeatherCode.description(for: c.weather_code).lowercased()
-        let u  = tempUnit
-        let wind = Int(round(c.wind_speed_10m))
-        let uv = c.uv_index
-        let pp = d.precipitation_probability_max.first ?? 0
-        let hi = Int(round(d.temperature_2m_max[0]))
-        let lo = Int(round(d.temperature_2m_min[0]))
-        let q  = query.lowercased()
-
-        if q.contains("wear") || q.contains("dress") || q.contains("outfit") {
-            if t < 30 { return "\(t)\(u) (feels \(fl)\(u)). Heavy coat, layers, gloves." }
-            if t < 50 { return "\(t)\(u). Jacket.\(wind > 15 ? " Windy." : "")" }
-            if t < 70 { return "\(t)\(u), \(cond). Light layer.\(pp > 40 ? " Umbrella." : "")" }
-            if t < 85 { return "\(t)\(u). T-shirt.\(uv > 5 ? " Sunscreen." : "")" }
-            return "\(t)\(u). Hot. Stay light, hydrate."
-        }
-        if q.contains("umbrella") || q.contains("rain") {
-            if c.precipitation > 0 { return "Raining now (\(String(format: "%.1f", c.precipitation))mm/hr). Yes." }
-            return pp > 50 ? "\(pp)% chance. Bring one." : pp > 20 ? "\(pp)%. Your call." : "\(pp)%. You're fine."
-        }
-        if q.contains("uv") || q.contains("sun") {
-            return "UV \(String(format: "%.1f", uv)) — \(UVHelper.label(uv).lowercased()).\(uv > 5 ? " Sunscreen." : "")"
-        }
-        if q.contains("wind") {
-            return "\(wind)mph \(WindHelper.degreeToCompass(c.wind_direction_10m)), gusts \(Int(round(c.wind_gusts_10m))). \(WindHelper.beaufort(c.wind_speed_10m))."
-        }
-        if q.contains("pressure") {
-            return "Pressure \(Int(round(c.surface_pressure))) hPa — \(pressureTrend.rawValue.lowercased()). \(pressureTrend.description)."
-        }
-
-        return "\(locationService.city): \(t)\(u) (feels \(fl)\(u)), \(cond). Wind \(wind)mph. \(lo)–\(hi)\(u). \(pp)% rain."
-    }
-
     // MARK: - AI Key Sync
     func syncAIKeys() async {
         await aiService.setKeys(
@@ -315,15 +304,24 @@ class WeatherViewModel: ObservableObject {
             gemini:    geminiKey.isEmpty    ? nil : geminiKey,
             openai:    openaiKey.isEmpty    ? nil : openaiKey
         )
+        await aiService.setConfig(timeout: aiTimeoutSeconds, maxTokens: aiMaxTokens)
     }
 
     // MARK: - Background Refresh
-    private func startBackgroundRefresh() {
-        Timer.scheduledTimer(withTimeInterval: 600, repeats: true) { [weak self] _ in
-            guard let self = self else { return }
-            Task { @MainActor [self] in
-                await self.fetchWeatherData()
+        private func startBackgroundRefresh() {
+            guard autoRefreshEnabled else { return }
+            let interval = TimeInterval(refreshIntervalMin * 60)
+            Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { _ in
+                // Capture weak self directly inside the Task to satisfy Xcode 14
+                Task { @MainActor [weak self] in
+                    guard let self = self, self.autoRefreshEnabled else { return }
+                    if self.verboseLogging { print("[AHID] Background refresh triggered") }
+                    await self.fetchWeatherData()
+                }
             }
         }
+
+    func clearChatHistory() {
+        chatMessages = []
     }
 }

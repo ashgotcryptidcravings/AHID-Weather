@@ -70,10 +70,14 @@ struct HeaderView: View {
         .onReceive(timer) { self.currentTime = $0 }
     }
 
-    private var formattedTime: String {
+    private static let clockFormatter: DateFormatter = {
         let f = DateFormatter()
         f.dateFormat = "EEEE, MMM d  HH:mm:ss"
-        return f.string(from: currentTime).uppercased()
+        return f
+    }()
+
+    private var formattedTime: String {
+        Self.clockFormatter.string(from: currentTime).uppercased()
     }
 }
 

@@ -7,7 +7,7 @@ struct HourlyForecastView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             ScrollView(.horizontal, showsIndicators: true) {
-                HStack(spacing: 6) {
+                LazyHStack(spacing: 6) {
                     ForEach(items) { item in
                         hourlyCard(item)
                     }

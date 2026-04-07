@@ -1,48 +1,27 @@
 import SwiftUI
 
-// MARK: - Equal-height panel helper
-private struct PanelHeightKey: PreferenceKey {
-    static var defaultValue: CGFloat = 0
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-        value = max(value, nextValue())
-    }
-}
-
 struct CurrentConditionsView: View {
     @ObservedObject var vm: WeatherViewModel
-    @State private var rowHeight: CGFloat = 0
 
     var body: some View {
         if let current = vm.currentWeather, let daily = vm.dailyWeather {
+            #if os(iOS)
+            VStack(spacing: 12) {
+                heroBlock(current: current, daily: daily)
+                windPressureBlock(current: current)
+                aqiBlock(current: current)
+            }
+            #else
+            // HStack natively equalises child heights; no GeometryReader/PreferenceKey needed.
             HStack(alignment: .top, spacing: 12) {
                 heroBlock(current: current, daily: daily)
-                    .frame(maxWidth: .infinity)
-                    .frame(minHeight: rowHeight, alignment: .top)
-                    .background(
-                        GeometryReader { geo in
-                            Color.clear.preference(key: PanelHeightKey.self, value: geo.size.height)
-                        }
-                    )
-
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 windPressureBlock(current: current)
-                    .frame(maxWidth: .infinity)
-                    .frame(minHeight: rowHeight, alignment: .top)
-                    .background(
-                        GeometryReader { geo in
-                            Color.clear.preference(key: PanelHeightKey.self, value: geo.size.height)
-                        }
-                    )
-
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
                 aqiBlock(current: current)
-                    .frame(maxWidth: .infinity)
-                    .frame(minHeight: rowHeight, alignment: .top)
-                    .background(
-                        GeometryReader { geo in
-                            Color.clear.preference(key: PanelHeightKey.self, value: geo.size.height)
-                        }
-                    )
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             }
-            .onPreferenceChange(PanelHeightKey.self) { rowHeight = $0 }
+            #endif
         }
     }
 

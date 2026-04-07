@@ -4,11 +4,18 @@ actor AIService {
     private var anthropicKey: String?
     private var geminiKey: String?
     private var openaiKey: String?
+    private var timeout: TimeInterval = 12
+    private var maxTokens: Int = 300
 
     func setKeys(anthropic: String?, gemini: String?, openai: String?) {
         self.anthropicKey = anthropic
         self.geminiKey    = gemini
         self.openaiKey    = openai
+    }
+
+    func setConfig(timeout: TimeInterval, maxTokens: Int) {
+        self.timeout   = timeout
+        self.maxTokens = maxTokens
     }
 
     var hasAnyKey: Bool {
@@ -45,7 +52,7 @@ actor AIService {
     private func testAnthropic(key: String) async -> (Bool, String) {
         // GET /v1/models — no body required, returns 200 for valid keys
         guard let url = URL(string: "https://api.anthropic.com/v1/models") else {
-            return (false, AppError.key003_networkError("Bad URL").localizedDescription ?? "")
+            return (false, AppError.key003_networkError("Bad URL").localizedDescription )
         }
         var req = URLRequest(url: url)
         req.httpMethod = "GET"
@@ -57,7 +64,7 @@ actor AIService {
 
     private func testGemini(key: String) async -> (Bool, String) {
         guard let url = URL(string: "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=\(key)") else {
-            return (false, AppError.key003_networkError("Bad URL").localizedDescription ?? "")
+            return (false, AppError.key003_networkError("Bad URL").localizedDescription )
         }
         var req = URLRequest(url: url)
         req.httpMethod = "POST"
@@ -70,7 +77,7 @@ actor AIService {
 
     private func testOpenAI(key: String) async -> (Bool, String) {
         guard let url = URL(string: "https://api.openai.com/v1/chat/completions") else {
-            return (false, AppError.key003_networkError("Bad URL").localizedDescription ?? "")
+            return (false, AppError.key003_networkError("Bad URL").localizedDescription )
         }
         var req = URLRequest(url: url)
         req.httpMethod = "POST"
@@ -89,7 +96,7 @@ actor AIService {
     private func testOWM(key: String) async -> (Bool, String) {
         let urlStr = "https://api.openweathermap.org/data/2.5/weather?lat=41.6&lon=-83.5&appid=\(key)"
         guard let url = URL(string: urlStr) else {
-            return (false, AppError.key003_networkError("Bad URL").localizedDescription ?? "")
+            return (false, AppError.key003_networkError("Bad URL").localizedDescription )
         }
         var req = URLRequest(url: url)
         req.timeoutInterval = 8
@@ -100,17 +107,17 @@ actor AIService {
         do {
             let (_, response) = try await URLSession.shared.data(for: request)
             guard let http = response as? HTTPURLResponse else {
-                return (false, AppError.key003_networkError("No HTTP response").localizedDescription ?? "")
+                return (false, AppError.key003_networkError("No HTTP response").localizedDescription )
             }
             switch http.statusCode {
             case 200, 201:
                 return (true, "\(provider) key valid ✓")
             case 401, 403:
-                return (false, AppError.key001_invalidKey(provider).localizedDescription ?? "")
+                return (false, AppError.key001_invalidKey(provider).localizedDescription )
             case 402:
                 return (true, "\(provider) key valid — account has no credits.")
             case 429:
-                return (true, AppError.key002_rateLimited(provider).localizedDescription ?? "")
+                return (true, AppError.key002_rateLimited(provider).localizedDescription )
             case 400:
                 return (false, "[\(AppError.key004_httpError(400, provider).code)] \(provider) rejected the request (400). Try again.")
             case 500, 503:
@@ -118,12 +125,12 @@ actor AIService {
             case 529:
                 return (true, "\(provider) overloaded (529) — key valid, service busy.")
             default:
-                return (false, AppError.key004_httpError(http.statusCode, provider).localizedDescription ?? "")
+                return (false, AppError.key004_httpError(http.statusCode, provider).localizedDescription )
             }
         } catch let e as URLError where e.code == .timedOut {
-            return (false, AppError.key003_networkError("Timed out").localizedDescription ?? "")
+            return (false, AppError.key003_networkError("Timed out").localizedDescription )
         } catch {
-            return (false, AppError.key003_networkError(error.localizedDescription).localizedDescription ?? "")
+            return (false, AppError.key003_networkError(error.localizedDescription).localizedDescription )
         }
     }
 
@@ -133,13 +140,13 @@ actor AIService {
         guard let url = URL(string: "https://api.anthropic.com/v1/messages") else { return nil }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.timeoutInterval = 12
+        request.timeoutInterval = timeout
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue(key,                forHTTPHeaderField: "x-api-key")
         request.setValue("2023-06-01",       forHTTPHeaderField: "anthropic-version")
         let body: [String: Any] = [
-            "model": "claude-3-5-haiku-latest",
-            "max_tokens": 300,
+            "model": "claude-3-5-haiku",
+            "max_tokens": maxTokens,
             "system": system,
             "messages": [["role": "user", "content": message]]
         ]
@@ -159,12 +166,12 @@ actor AIService {
         guard let url = URL(string: "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=\(key)") else { return nil }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.timeoutInterval = 12
+        request.timeoutInterval = timeout
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         let body: [String: Any] = [
             "system_instruction": ["parts": [["text": system]]],
             "contents": [["parts": [["text": message]]]],
-            "generationConfig": ["maxOutputTokens": 300]
+            "generationConfig": ["maxOutputTokens": maxTokens]
         ]
         request.httpBody = try? JSONSerialization.data(withJSONObject: body)
         do {
@@ -184,12 +191,12 @@ actor AIService {
         guard let url = URL(string: "https://api.openai.com/v1/chat/completions") else { return nil }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.timeoutInterval = 12
+        request.timeoutInterval = timeout
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(key)",    forHTTPHeaderField: "Authorization")
         let body: [String: Any] = [
             "model": "gpt-4o-mini",
-            "max_tokens": 300,
+            "max_tokens": maxTokens,
             "messages": [
                 ["role": "system", "content": system],
                 ["role": "user",   "content": message]

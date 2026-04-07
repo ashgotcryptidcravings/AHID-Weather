@@ -81,8 +81,12 @@ struct MetricsGridView: View {
     }
 
     private func dynamicColumns(showSnow: Bool) -> [GridItem] {
+        #if os(iOS)
+        return Array(repeating: GridItem(.flexible(), spacing: 12), count: 3)
+        #else
         let count = showSnow ? 7 : 6
         return Array(repeating: GridItem(.flexible(), spacing: 16), count: min(count, 7))
+        #endif
     }
 
     private func metricCell(id: String, label: String, value: String, unit: String, suffix: String? = nil, info: String) -> some View {

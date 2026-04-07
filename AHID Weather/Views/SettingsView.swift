@@ -1,5 +1,8 @@
 import SwiftUI
 import WebKit
+#if os(iOS)
+import ActivityKit
+#endif
 
 private extension Color {
     static var settingsCardBackground: Color {
@@ -28,6 +31,10 @@ struct SettingsView: View {
                 .tabItem { Label("Changelog", systemImage: "clock.arrow.circlepath") }
             DebugView()
                 .tabItem { Label("Debug",     systemImage: "ladybug") }
+            #if os(iOS)
+            DynamicIslandDebugView()
+                .tabItem { Label("D.Island",  systemImage: "dot.circle.and.hand.point.up.left.fill") }
+            #endif
         }
         #if os(macOS)
         .frame(width: 580, height: 520)
@@ -37,22 +44,120 @@ struct SettingsView: View {
 
 // MARK: - General Settings
 struct GeneralSettingsView: View {
-    @AppStorage("useCelsius") private var useCelsius = false
+    @AppStorage("useCelsius")         private var useCelsius         = false
+    @AppStorage("autoRefreshEnabled") private var autoRefreshEnabled = true
+    @AppStorage("refreshIntervalMin") private var refreshIntervalMin = 10
+    @AppStorage("aiTimeoutSeconds")   private var aiTimeoutSeconds: Double = 12
+    @AppStorage("aiMaxTokens")        private var aiMaxTokens        = 300
+    @AppStorage("verboseLogging")     private var verboseLogging      = false
+    @AppStorage("errorSoundEnabled")  private var errorSoundEnabled  = true
+    @AppStorage("errorNotifEnabled")  private var errorNotifEnabled  = true
+
+    private let intervalOptions = [5, 10, 15, 30]
+    private let timeoutOptions: [Double] = [8, 12, 20, 30]
+    private let tokenOptions = [100, 200, 300, 500]
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            Text("General Settings").font(.headline)
-            VStack(alignment: .leading, spacing: 8) {
-                Text("TEMPERATURE UNIT")
-                    .font(.caption).foregroundColor(.secondary).tracking(2)
-                Toggle("Use Celsius (°C)", isOn: $useCelsius).toggleStyle(.switch)
+        ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
+                Text("General Settings").font(.headline)
+
+                // Temperature
+                settingsCard {
+                    label("TEMPERATURE UNIT")
+                    Toggle("Use Celsius (°C)", isOn: $useCelsius).toggleStyle(.switch)
+                }
+
+                // Auto-refresh
+                settingsCard {
+                    label("AUTO-REFRESH")
+                    Toggle("Enable background refresh", isOn: $autoRefreshEnabled).toggleStyle(.switch)
+                    if autoRefreshEnabled {
+                        HStack {
+                            Text("Interval").font(.callout)
+                            Spacer()
+                            Picker("", selection: $refreshIntervalMin) {
+                                ForEach(intervalOptions, id: \.self) { m in
+                                    Text("\(m) min").tag(m)
+                                }
+                            }
+                            .pickerStyle(.segmented)
+                            .frame(maxWidth: 200)
+                        }
+                        .padding(.top, 4)
+                        Text("Restart app for interval change to take effect.")
+                            .font(.caption2).foregroundColor(.secondary)
+                    }
+                }
+
+                // AI Behavior
+                settingsCard {
+                    label("AI BEHAVIOR")
+                    HStack {
+                        Text("Request timeout").font(.callout)
+                        Spacer()
+                        Picker("", selection: $aiTimeoutSeconds) {
+                            ForEach(timeoutOptions, id: \.self) { t in
+                                Text("\(Int(t))s").tag(t)
+                            }
+                        }
+                        .pickerStyle(.segmented)
+                        .frame(maxWidth: 200)
+                    }
+                    HStack {
+                        Text("Max tokens").font(.callout)
+                        Spacer()
+                        Picker("", selection: $aiMaxTokens) {
+                            ForEach(tokenOptions, id: \.self) { t in
+                                Text("\(t)").tag(t)
+                            }
+                        }
+                        .pickerStyle(.segmented)
+                        .frame(maxWidth: 200)
+                    }
+                    Text("AI responses only come from the API. No offline fallback — failed calls show an error code.")
+                        .font(.caption2).foregroundColor(.secondary)
+                }
+
+                // Error Alerts
+                settingsCard {
+                    label("ERROR ALERTS")
+                    Toggle("Play sound on error", isOn: $errorSoundEnabled).toggleStyle(.switch)
+                    Toggle("Show notification on error", isOn: $errorNotifEnabled).toggleStyle(.switch)
+                    Text("Plays a system alert and posts a local notification whenever a weather data fetch fails. Notification permission is requested at launch.")
+                        .font(.caption2).foregroundColor(.secondary)
+                        .padding(.top, 2)
+                }
+
+                // Debug
+                settingsCard {
+                    label("DEVELOPER")
+                    Toggle("Verbose logging (console)", isOn: $verboseLogging).toggleStyle(.switch)
+                }
+
+                Text("Theme colors and radar overlay settings are configured directly in the main app panels.")
+                    .font(.caption).foregroundColor(.secondary)
+
+                Spacer()
             }
-            Divider()
-            Text("Theme colors and radar overlay settings are configured directly in the main app panels.")
-                .font(.caption).foregroundColor(.secondary)
-            Spacer()
+            .padding(24)
         }
-        .padding(24)
+    }
+
+    private func label(_ text: String) -> some View {
+        Text(text)
+            .font(.system(size: 10, weight: .semibold, design: .monospaced))
+            .tracking(2).foregroundColor(.secondary)
+            .padding(.bottom, 2)
+    }
+
+    private func settingsCard<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            content()
+        }
+        .padding(12)
+        .background(Color.settingsCardBackground)
+        .cornerRadius(8)
     }
 }
 
@@ -297,7 +402,14 @@ struct ChangelogView: View {
     }
 
     private let entries: [Entry] = [
-        Entry(version: "2.0", date: "April 2025", notes: [
+        Entry(version: "2.1", date: "April 2026", notes: [
+            "Error sound & notification — system alert plays and a local notification fires whenever a weather data fetch fails",
+            "New Settings → General: Error Alerts section with toggles for sound and notification independently",
+            "Notification permission requested once at app launch; re-uses the same notification slot per error code to avoid stacking",
+            "New error codes: NOTIF-001 (permission denied), NOTIF-002 (notification post failed)",
+            "Debug panel Error Code Reference updated with NOTIF-001 and NOTIF-002"
+        ]),
+        Entry(version: "2.0", date: "April 2026", notes: [
             "Radar layer tabs now functional — PRECIP uses RainViewer tiles; TEMP/WIND/CLOUDS/PRESSURE use OWM tile overlays (key required)",
             "Hourly forecast cards tap-to-expand: shows feels-like, humidity, wind direction, Beaufort scale, and condition",
             "API key testing tool — TEST KEY button per provider with pass/fail and error code",
@@ -310,7 +422,7 @@ struct ChangelogView: View {
             "WeatherKit entitlement confirmed present; Open-Meteo remains primary (WeatherKit availability depends on OS/API support)",
             "iOS + macOS compatibility maintained, including Xcode 14.2 toolchains"
         ]),
-        Entry(version: "1.0", date: "Early 2025", notes: [
+        Entry(version: "1.0", date: "April 2026", notes: [
             "Initial release — Open-Meteo weather, RainViewer radar map, AI chat (Claude / Gemini / GPT)",
             "7-day forecast with AI analysis, weather alerts, data metrics grid, UV and AQI panels",
             "Location services with CLGeocoder + Nominatim fallback, location simulation mode",
@@ -356,37 +468,69 @@ struct ChangelogView: View {
 // MARK: - Debug
 struct DebugView: View {
     @State private var cacheCleared = false
+    @State private var chatCleared  = false
+
+    @AppStorage("verboseLogging")     private var verboseLogging     = false
+    @AppStorage("autoRefreshEnabled") private var autoRefreshEnabled = true
+    @AppStorage("refreshIntervalMin") private var refreshIntervalMin = 10
+    @AppStorage("aiTimeoutSeconds")   private var aiTimeoutSeconds: Double = 12
+
+    // Access to ViewModel for chat clear — injected via environment or direct call
+    // We use NotificationCenter as a lightweight bridge
+    private let clearChatNotification = Notification.Name("AHID.clearChat")
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 15) {
+
                 Text("Device & Session Info").font(.headline)
                 VStack(spacing: 8) {
-                    infoRow("OS Version", ProcessInfo.processInfo.operatingSystemVersionString)
-                    infoRow("App Version",   Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "2.0")
-                    infoRow("Build",         Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "2")
-                    infoRow("Bundle ID",     Bundle.main.bundleIdentifier ?? "—")
-                    infoRow("WeatherKit",    weatherKitStatus())
+                    infoRow("OS Version",  ProcessInfo.processInfo.operatingSystemVersionString)
+                    infoRow("App Version", Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "2.0")
+                    infoRow("Build",       Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "2")
+                    infoRow("Bundle ID",   Bundle.main.bundleIdentifier ?? "—")
+                    infoRow("WeatherKit",  weatherKitStatus())
+                    infoRow("Auto-Refresh", autoRefreshEnabled ? "ON · \(refreshIntervalMin)min" : "OFF")
+                    infoRow("AI Timeout",  "\(Int(aiTimeoutSeconds))s")
+                    infoRow("Verbose Log", verboseLogging ? "ON" : "OFF")
                 }
                 .font(.callout)
 
                 Divider()
 
-                Text("Cache Controls").font(.headline)
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text("Clear Weather Cache").font(.subheadline)
-                        Text("Forces a fresh fetch on next refresh.").font(.caption).foregroundColor(.secondary)
+                Text("Cache & Data Controls").font(.headline)
+                VStack(spacing: 12) {
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text("Clear Weather Cache").font(.subheadline)
+                            Text("Forces a fresh fetch on next refresh.").font(.caption).foregroundColor(.secondary)
+                        }
+                        Spacer()
+                        Button(action: {
+                            clearWebKitCache()
+                            cacheCleared = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { cacheCleared = false }
+                        }) {
+                            Text(cacheCleared ? "Cleared ✓" : "Clear Cache")
+                        }
+                        .disabled(cacheCleared)
                     }
-                    Spacer()
-                    Button(action: {
-                        clearWebKitCache()
-                        cacheCleared = true
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { cacheCleared = false }
-                    }) {
-                        Text(cacheCleared ? "Cleared ✓" : "Clear Cache")
+
+                    HStack {
+                        VStack(alignment: .leading) {
+                            Text("Clear Chat History").font(.subheadline)
+                            Text("Removes all AI conversation messages.").font(.caption).foregroundColor(.secondary)
+                        }
+                        Spacer()
+                        Button(action: {
+                            NotificationCenter.default.post(name: clearChatNotification, object: nil)
+                            chatCleared = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2) { chatCleared = false }
+                        }) {
+                            Text(chatCleared ? "Cleared ✓" : "Clear Chat")
+                        }
+                        .disabled(chatCleared)
                     }
-                    .disabled(cacheCleared)
                 }
 
                 Divider()
@@ -408,7 +552,7 @@ struct DebugView: View {
                     }
                     Group {
                         codeRow("AI-001", "No AI provider key configured")
-                        codeRow("AI-002", "All configured providers failed")
+                        codeRow("AI-002", "All configured providers failed — no fallback")
                         codeRow("AI-003", "Provider rate limit exceeded")
                         codeRow("AI-004", "Key rejected by provider (401)")
                         codeRow("AI-005", "AI provider returned HTTP error")
@@ -418,6 +562,10 @@ struct DebugView: View {
                         codeRow("KEY-002", "Key valid but rate-limited (429)")
                         codeRow("KEY-003", "Network error during key test")
                         codeRow("KEY-004", "Unexpected HTTP status during test")
+                    }
+                    Group {
+                        codeRow("NOTIF-001", "Notification permission denied by user")
+                        codeRow("NOTIF-002", "Failed to post error notification to system")
                     }
                 }
 
@@ -455,6 +603,202 @@ struct DebugView: View {
                          modifiedSince: Date(timeIntervalSince1970: 0)) { }
     }
 }
+
+#if os(iOS)
+// MARK: - Dynamic Island Debug
+struct DynamicIslandDebugView: View {
+    var body: some View {
+        if #available(iOS 16.2, *) {
+            DynamicIslandDebugContent()
+        } else {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 16) {
+                    Text("DYNAMIC ISLAND")
+                        .font(.system(size: 11, weight: .semibold, design: .monospaced))
+                        .tracking(3)
+                        .foregroundColor(.accentColor)
+                    compatRow("iOS Version", ProcessInfo.processInfo.operatingSystemVersionString)
+                    compatRow("Live Activities API", "Unavailable — iOS 16.2+ required")
+                    compatRow("Compatible Devices", "iPhone 14 Pro / Pro Max and later")
+                }
+                .padding(24)
+            }
+        }
+    }
+
+    private func compatRow(_ label: String, _ value: String) -> some View {
+        HStack(alignment: .top) {
+            Text(label).font(.system(size: 10)).foregroundColor(.secondary).frame(width: 140, alignment: .leading)
+            Text(value).font(.system(size: 10, design: .monospaced)).foregroundColor(.primary).fixedSize(horizontal: false, vertical: true)
+        }
+    }
+}
+
+@available(iOS 16.2, *)
+private struct DynamicIslandDebugContent: View {
+    @ObservedObject private var lam = LiveActivityManager.shared
+
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 20) {
+
+                // MARK: Compatibility
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("DYNAMIC ISLAND")
+                        .font(.system(size: 11, weight: .semibold, design: .monospaced))
+                        .tracking(3)
+                        .foregroundColor(.accentColor)
+
+                    compatRow("iOS Version", ProcessInfo.processInfo.operatingSystemVersionString)
+                    compatRow("Live Activities API", "Available (iOS 16.2+)")
+                    compatRow("Activities Enabled",
+                              ActivityAuthorizationInfo().areActivitiesEnabled ? "YES" : "NO (check Settings)")
+                }
+                .padding(14)
+                .background(Color.settingsCardBackground)
+                .cornerRadius(8)
+
+                // MARK: Current State
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("ACTIVITY STATE")
+                        .font(.system(size: 11, weight: .semibold, design: .monospaced))
+                        .tracking(3)
+                        .foregroundColor(.accentColor)
+
+                    HStack(spacing: 8) {
+                        Circle()
+                            .fill(lam.isActivityActive ? Color.green : Color.gray)
+                            .frame(width: 8, height: 8)
+                        Text(lam.isActivityActive ? "ACTIVE" : "INACTIVE")
+                            .font(.system(size: 10, design: .monospaced))
+                            .foregroundColor(lam.isActivityActive ? .green : .secondary)
+                    }
+
+                    if lam.isActivityActive {
+                        infoRow("Title", lam.currentTitle.isEmpty ? "—" : lam.currentTitle)
+                        infoRow("Body",  lam.currentBody.isEmpty  ? "—" : lam.currentBody)
+                    }
+
+                    if !lam.lastActivityStatus.isEmpty {
+                        Text(lam.lastActivityStatus)
+                            .font(.system(size: 9, design: .monospaced))
+                            .foregroundColor(.secondary)
+                            .padding(.top, 2)
+                    }
+
+                    if let err = lam.lastActivityError {
+                        Text(err)
+                            .font(.system(size: 9, design: .monospaced))
+                            .foregroundColor(.red)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .padding(.top, 2)
+                    }
+                }
+                .padding(14)
+                .background(Color.settingsCardBackground)
+                .cornerRadius(8)
+
+                // MARK: Test Controls
+                VStack(alignment: .leading, spacing: 12) {
+                    Text("TEST CONTROLS")
+                        .font(.system(size: 11, weight: .semibold, design: .monospaced))
+                        .tracking(3)
+                        .foregroundColor(.accentColor)
+
+                    testButton(label: "START WEATHER ALERT TEST", color: .orange, icon: "cloud.bolt.fill") {
+                        lam.startWeatherAlert(
+                            location: "Debug · Test City",
+                            title: "SEVERE THUNDERSTORM",
+                            body: "Large hail and damaging winds possible. Take shelter immediately.",
+                            level: .warning
+                        )
+                    }
+
+                    testButton(label: "START APP ERROR TEST", color: .red, icon: "xmark.circle.fill") {
+                        lam.startAppError(
+                            location: "Debug · Test City",
+                            code: "WX-003",
+                            description: "HTTP error from weather provider — tap to retry."
+                        )
+                    }
+
+                    testButton(label: "END ACTIVITY", color: .gray, icon: "stop.circle") {
+                        lam.endActivity()
+                    }
+                    .disabled(!lam.isActivityActive)
+                    .opacity(lam.isActivityActive ? 1.0 : 0.4)
+
+                    Text("To see the Live Activity: lock the device or swipe to home after pressing Start. The Simulator shows it as a lock-screen banner.")
+                        .font(.system(size: 9, design: .monospaced))
+                        .foregroundColor(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .padding(14)
+                .background(Color.settingsCardBackground)
+                .cornerRadius(8)
+
+                // MARK: Notes
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("NOTES")
+                        .font(.system(size: 10, weight: .semibold, design: .monospaced))
+                        .tracking(2)
+                        .foregroundColor(.secondary)
+                    Text("Dynamic Island Live Activities require a physical iPhone 14 Pro, 14 Pro Max, 15, 15 Pro, or later. The Simulator shows a lock-screen banner instead. Activities auto-expire after 1 hour if not ended.")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .padding(14)
+                .background(Color.settingsCardBackground)
+                .cornerRadius(8)
+
+                Spacer()
+            }
+            .padding(24)
+        }
+    }
+
+    private func infoRow(_ label: String, _ value: String) -> some View {
+        HStack(alignment: .top) {
+            Text(label)
+                .font(.system(size: 10, design: .monospaced))
+                .foregroundColor(.secondary)
+                .frame(width: 48, alignment: .leading)
+            Text(value)
+                .font(.system(size: 10, design: .monospaced))
+                .foregroundColor(.primary)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+    }
+
+    private func compatRow(_ label: String, _ value: String) -> some View {
+        HStack(alignment: .top) {
+            Text(label).font(.system(size: 10)).foregroundColor(.secondary).frame(width: 140, alignment: .leading)
+            Text(value).font(.system(size: 10, design: .monospaced)).foregroundColor(.primary).fixedSize(horizontal: false, vertical: true)
+        }
+    }
+
+    private func testButton(label: String, color: Color, icon: String,
+                            action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            HStack(spacing: 8) {
+                Image(systemName: icon).font(.system(size: 12))
+                Text(label)
+                    .font(.system(size: 10, weight: .semibold, design: .monospaced))
+                    .tracking(1)
+                Spacer()
+            }
+            .foregroundColor(color)
+            .padding(.horizontal, 14)
+            .padding(.vertical, 10)
+            .background(color.opacity(0.1))
+            .overlay(Rectangle().stroke(color.opacity(0.4), lineWidth: 1))
+        }
+        .buttonStyle(.plain)
+    }
+
+}
+#endif
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View { SettingsView() }

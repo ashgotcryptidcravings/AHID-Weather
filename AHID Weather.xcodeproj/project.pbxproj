@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		728153812F8376990086A1E7 /* AHIDWeatherWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000100000000000000000C /* AHIDWeatherWidgetBundle.swift */; };
+		728153822F83769E0086A1E7 /* AHIDLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000100000000000000000D /* AHIDLiveActivity.swift */; };
 		729935FE2F81AAAF00D03F70 /* AHIDWeatherApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729935FD2F81AAAF00D03F70 /* AHIDWeatherApp.swift */; };
 		729936022F81AAB000D03F70 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 729936012F81AAB000D03F70 /* Assets.xcassets */; };
 		729936052F81AAB000D03F70 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 729936042F81AAB000D03F70 /* Preview Assets.xcassets */; };
@@ -33,6 +35,17 @@
 		AA0001000000000000000018 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0001000000000000000017 /* LocationService.swift */; };
 		AA000100000000000000001A /* WeatherModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0001000000000000000019 /* WeatherModels.swift */; };
 		AA000100000000000000001C /* WeatherHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA000100000000000000001B /* WeatherHelpers.swift */; };
+		AA0001000000000000000022 /* MetalBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0001000000000000000021 /* MetalBackgroundView.swift */; };
+		AA0001000000000000000024 /* AHIDOrbs.metal in Sources */ = {isa = PBXBuildFile; fileRef = AA0001000000000000000023 /* AHIDOrbs.metal */; };
+		BB0001000000000000000001 /* AHIDActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0001000000000000000005 /* AHIDActivityAttributes.swift */; };
+		BB0001000000000000000002 /* LiveActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0001000000000000000006 /* LiveActivityManager.swift */; };
+		BB0001000000000000000003 /* AHIDScan.metal in Sources */ = {isa = PBXBuildFile; fileRef = BB0001000000000000000007 /* AHIDScan.metal */; };
+		BB0001000000000000000004 /* MetalScanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0001000000000000000008 /* MetalScanView.swift */; };
+		BB0001000000000000000009 /* AHIDWeatherWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000100000000000000000C /* AHIDWeatherWidgetBundle.swift */; };
+		BB000100000000000000000A /* AHIDLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB000100000000000000000D /* AHIDLiveActivity.swift */; };
+		BB000100000000000000000B /* AHIDActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB0001000000000000000005 /* AHIDActivityAttributes.swift */; };
+		BB0001000000000000000018 /* AHID Weather Widget.appex in Embed Extensions */ = {isa = PBXBuildFile; fileRef = BB000100000000000000000E /* AHID Weather Widget.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CC0001000000000000000002 /* ErrorNotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0001000000000000000001 /* ErrorNotificationService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,7 +63,28 @@
 			remoteGlobalIDString = 729935F92F81AAAF00D03F70;
 			remoteInfo = "AHID Weather";
 		};
+		BB0001000000000000000019 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 729935F22F81AAAF00D03F70 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BB0001000000000000000010;
+			remoteInfo = "AHID Weather Widget";
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		BB0001000000000000000017 /* Embed Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				BB0001000000000000000018 /* AHID Weather Widget.appex in Embed Extensions */,
+			);
+			name = "Embed Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		729935FA2F81AAAF00D03F70 /* AHID Weather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AHID Weather.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -84,6 +118,16 @@
 		AA0001000000000000000017 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		AA0001000000000000000019 /* WeatherModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModels.swift; sourceTree = "<group>"; };
 		AA000100000000000000001B /* WeatherHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherHelpers.swift; sourceTree = "<group>"; };
+		AA0001000000000000000021 /* MetalBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalBackgroundView.swift; sourceTree = "<group>"; };
+		AA0001000000000000000023 /* AHIDOrbs.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = AHIDOrbs.metal; sourceTree = "<group>"; };
+		BB0001000000000000000005 /* AHIDActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AHIDActivityAttributes.swift; sourceTree = "<group>"; };
+		BB0001000000000000000006 /* LiveActivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityManager.swift; sourceTree = "<group>"; };
+		BB0001000000000000000007 /* AHIDScan.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = AHIDScan.metal; sourceTree = "<group>"; };
+		BB0001000000000000000008 /* MetalScanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetalScanView.swift; sourceTree = "<group>"; };
+		BB000100000000000000000C /* AHIDWeatherWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AHIDWeatherWidgetBundle.swift; sourceTree = "<group>"; };
+		BB000100000000000000000D /* AHIDLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AHIDLiveActivity.swift; sourceTree = "<group>"; };
+		BB000100000000000000000E /* AHID Weather Widget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "AHID Weather Widget.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC0001000000000000000001 /* ErrorNotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorNotificationService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +152,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BB0001000000000000000015 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -115,6 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				729935FC2F81AAAF00D03F70 /* AHID Weather */,
+				BB000100000000000000000F /* AHID Weather Widget */,
 				729936132F81AAB100D03F70 /* AHID WeatherTests */,
 				7299361D2F81AAB100D03F70 /* AHID WeatherUITests */,
 				729935FB2F81AAAF00D03F70 /* Products */,
@@ -127,6 +179,7 @@
 				729935FA2F81AAAF00D03F70 /* AHID Weather.app */,
 				729936102F81AAB100D03F70 /* AHID WeatherTests.xctest */,
 				7299361A2F81AAB100D03F70 /* AHID WeatherUITests.xctest */,
+				BB000100000000000000000E /* AHID Weather Widget.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -188,6 +241,8 @@
 				AA000100000000000000000B /* RadarMapView.swift */,
 				AA000100000000000000000D /* MetricsGridView.swift */,
 				AA000100000000000000000F /* HourlyForecastView.swift */,
+				AA0001000000000000000021 /* MetalBackgroundView.swift */,
+				BB0001000000000000000008 /* MetalScanView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -198,6 +253,8 @@
 				729936062F81AAB000D03F70 /* Persistence.swift */,
 				729935FD2F81AAAF00D03F70 /* AHIDWeatherApp.swift */,
 				7299365A2F821A7600D03F70 /* index.html */,
+				AA0001000000000000000023 /* AHIDOrbs.metal */,
+				BB0001000000000000000007 /* AHIDScan.metal */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -216,6 +273,8 @@
 				AA0001000000000000000013 /* AIService.swift */,
 				AA0001000000000000000015 /* WeatherService.swift */,
 				AA0001000000000000000017 /* LocationService.swift */,
+				CC0001000000000000000001 /* ErrorNotificationService.swift */,
+				BB0001000000000000000006 /* LiveActivityManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -224,6 +283,7 @@
 			isa = PBXGroup;
 			children = (
 				AA0001000000000000000019 /* WeatherModels.swift */,
+				BB0001000000000000000005 /* AHIDActivityAttributes.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -236,6 +296,15 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		BB000100000000000000000F /* AHID Weather Widget */ = {
+			isa = PBXGroup;
+			children = (
+				BB000100000000000000000C /* AHIDWeatherWidgetBundle.swift */,
+				BB000100000000000000000D /* AHIDLiveActivity.swift */,
+			);
+			path = "AHID Weather Widget";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -246,10 +315,12 @@
 				729935F62F81AAAF00D03F70 /* Sources */,
 				729935F72F81AAAF00D03F70 /* Frameworks */,
 				729935F82F81AAAF00D03F70 /* Resources */,
+				BB0001000000000000000017 /* Embed Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				BB000100000000000000001A /* PBXTargetDependency */,
 			);
 			name = "AHID Weather";
 			productName = "AHID Weather";
@@ -292,6 +363,23 @@
 			productReference = 7299361A2F81AAB100D03F70 /* AHID WeatherUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		BB0001000000000000000010 /* AHID Weather Widget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BB0001000000000000000011 /* Build configuration list for PBXNativeTarget "AHID Weather Widget" */;
+			buildPhases = (
+				BB0001000000000000000014 /* Sources */,
+				BB0001000000000000000015 /* Frameworks */,
+				BB0001000000000000000016 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "AHID Weather Widget";
+			productName = "AHID Weather Widget";
+			productReference = BB000100000000000000000E /* AHID Weather Widget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -313,6 +401,9 @@
 						CreatedOnToolsVersion = 14.2;
 						TestTargetID = 729935F92F81AAAF00D03F70;
 					};
+					BB0001000000000000000010 = {
+						CreatedOnToolsVersion = 14.2;
+					};
 				};
 			};
 			buildConfigurationList = 729935F52F81AAAF00D03F70 /* Build configuration list for PBXProject "AHID Weather" */;
@@ -331,6 +422,7 @@
 				729935F92F81AAAF00D03F70 /* AHID Weather */,
 				7299360F2F81AAB100D03F70 /* AHID WeatherTests */,
 				729936192F81AAB100D03F70 /* AHID WeatherUITests */,
+				BB0001000000000000000010 /* AHID Weather Widget */,
 			);
 		};
 /* End PBXProject section */
@@ -360,6 +452,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BB0001000000000000000016 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -367,6 +466,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				728153822F83769E0086A1E7 /* AHIDLiveActivity.swift in Sources */,
 				729936072F81AAB000D03F70 /* Persistence.swift in Sources */,
 				7299360A2F81AAB000D03F70 /* AHID_Weather.xcdatamodeld in Sources */,
 				729936562F81D66C00D03F70 /* SettingsView.swift in Sources */,
@@ -385,8 +485,16 @@
 				AA0001000000000000000014 /* AIService.swift in Sources */,
 				AA0001000000000000000016 /* WeatherService.swift in Sources */,
 				AA0001000000000000000018 /* LocationService.swift in Sources */,
+				CC0001000000000000000002 /* ErrorNotificationService.swift in Sources */,
 				AA000100000000000000001A /* WeatherModels.swift in Sources */,
 				AA000100000000000000001C /* WeatherHelpers.swift in Sources */,
+				AA0001000000000000000022 /* MetalBackgroundView.swift in Sources */,
+				AA0001000000000000000024 /* AHIDOrbs.metal in Sources */,
+				BB0001000000000000000001 /* AHIDActivityAttributes.swift in Sources */,
+				BB0001000000000000000002 /* LiveActivityManager.swift in Sources */,
+				BB0001000000000000000003 /* AHIDScan.metal in Sources */,
+				BB0001000000000000000004 /* MetalScanView.swift in Sources */,
+				728153812F8376990086A1E7 /* AHIDWeatherWidgetBundle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -407,6 +515,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BB0001000000000000000014 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BB0001000000000000000009 /* AHIDWeatherWidgetBundle.swift in Sources */,
+				BB000100000000000000000A /* AHIDLiveActivity.swift in Sources */,
+				BB000100000000000000000B /* AHIDActivityAttributes.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -419,6 +537,11 @@
 			isa = PBXTargetDependency;
 			target = 729935F92F81AAAF00D03F70 /* AHID Weather */;
 			targetProxy = 7299361B2F81AAB100D03F70 /* PBXContainerItemProxy */;
+		};
+		BB000100000000000000001A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BB0001000000000000000010 /* AHID Weather Widget */;
+			targetProxy = BB0001000000000000000019 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -462,7 +585,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = z;
+				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -473,15 +596,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.7;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
+				SDKROOT = auto;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -523,21 +645,19 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = z;
+				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.7;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
+				SDKROOT = auto;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -550,7 +670,7 @@
 				CODE_SIGN_ENTITLEMENTS = "AHID Weather/AHID_Weather.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"AHID Weather/Preview Content\"";
 				DEVELOPMENT_TEAM = PULJN6655X;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -559,20 +679,20 @@
 				INFOPLIST_FILE = "AHID-Weather-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.7;
+				MARKETING_VERSION = 2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "Foundation.AHID-Weather";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				SWIFT_VERSION = 5.7;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -585,7 +705,7 @@
 				CODE_SIGN_ENTITLEMENTS = "AHID Weather/AHID_Weather.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"AHID Weather/Preview Content\"";
 				DEVELOPMENT_TEAM = PULJN6655X;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -594,20 +714,20 @@
 				INFOPLIST_FILE = "AHID-Weather-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.weather";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.7;
+				MARKETING_VERSION = 2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "Foundation.AHID-Weather";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				SWIFT_VERSION = 5.7;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -617,18 +737,17 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = PULJN6655X;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				MARKETING_VERSION = 1.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.7;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "Foundation.AHID-WeatherTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 5.7;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AHID Weather.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AHID Weather";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -638,18 +757,17 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = PULJN6655X;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				MARKETING_VERSION = 1.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.7;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "Foundation.AHID-WeatherTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 5.7;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AHID Weather.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AHID Weather";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -658,17 +776,17 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = PULJN6655X;
 				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.7;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "Foundation.AHID-WeatherUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 5.7;
 				TEST_TARGET_NAME = "AHID Weather";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -677,17 +795,61 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = PULJN6655X;
 				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.7;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "Foundation.AHID-WeatherUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 5.7;
 				TEST_TARGET_NAME = "AHID Weather";
+			};
+			name = Release;
+		};
+		BB0001000000000000000012 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "AHID Weather Widget/AHID_WeatherWidget.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = PULJN6655X;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "AHID Weather Widget/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 2.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "Foundation.AHID-Weather.widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				TARGETED_DEVICE_FAMILY = 1;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.7;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BB0001000000000000000013 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = "AHID Weather Widget/AHID_WeatherWidget.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = PULJN6655X;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "AHID Weather Widget/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 2.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "Foundation.AHID-Weather.widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.7;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -726,6 +888,15 @@
 			buildConfigurations = (
 				7299362B2F81AAB100D03F70 /* Debug */,
 				7299362C2F81AAB100D03F70 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BB0001000000000000000011 /* Build configuration list for PBXNativeTarget "AHID Weather Widget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BB0001000000000000000012 /* Debug */,
+				BB0001000000000000000013 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

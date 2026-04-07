@@ -3,7 +3,6 @@ import SwiftUI
 struct ContentView: View {
     @StateObject private var vm = WeatherViewModel()
 
-    // Collapsible section state
     @State private var conditionsCollapsed = false
     @State private var alertsCollapsed = false
     @State private var metricsCollapsed = false
@@ -11,13 +10,16 @@ struct ContentView: View {
     @State private var radarCollapsed = false
     @State private var aiCollapsed = false
 
+    #if os(iOS)
+    @State private var showSettings = false
+    #endif
+
     var body: some View {
         ZStack {
-            // Background
-            ThemeColors.void0
-                .ignoresSafeArea()
-
-            // Background orbs (decorative)
+            // Background fills edge-to-edge under Dynamic Island and home indicator.
+            // Each background layer carries its own .ignoresSafeArea(); the ZStack
+            // itself does NOT suppress safe areas so the ScrollView gets proper insets.
+            ThemeColors.void0.ignoresSafeArea()
             backgroundOrbs
 
             if vm.isLoading {
@@ -26,16 +28,39 @@ struct ContentView: View {
                 mainContent
             }
         }
-        .task {
-            await vm.start()
+        // ZStack fills the full screen (including under Dynamic Island + home indicator).
+        // ScrollView automatically inserts content insets matching safe area, so content
+        // never renders behind the Dynamic Island or home indicator.
+        .ignoresSafeArea()
+        .task { await vm.start() }
+        #if os(iOS)
+        .overlay(alignment: .bottomTrailing) {
+            Button { showSettings = true } label: {
+                Image(systemName: "gearshape.fill")
+                    .font(.system(size: 16))
+                    .foregroundColor(ThemeColors.accentBright)
+                    .padding(14)
+                    .background(ThemeColors.void2)
+                    .clipShape(Circle())
+                    .overlay(Circle().stroke(ThemeColors.accent.opacity(0.4), lineWidth: 1))
+            }
+            .padding(.bottom, 16)
+            .padding(.trailing, 20)
         }
+        .sheet(isPresented: $showSettings) {
+            SettingsView()
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
+        }
+        #endif
     }
 
-    // MARK: - Loading Screen
+    // MARK: - Loading Screen (Metal scan bar)
+
     private var loadingScreen: some View {
         VStack(spacing: 20) {
             Text("AHID // ADMINISTRATIVE HUMAN INTERFACE DESIGN")
-                .font(.system(size: 11, weight: .light, design: .default))
+                .font(.system(size: 11, weight: .light))
                 .tracking(5)
                 .foregroundColor(ThemeColors.accent.opacity(0.4))
 
@@ -44,30 +69,21 @@ struct ContentView: View {
                 .tracking(5)
                 .foregroundColor(ThemeColors.accentBright)
 
-            // Loading bar
-            GeometryReader { geo in
-                ZStack(alignment: .leading) {
-                    Rectangle()
-                        .fill(ThemeColors.void4)
-                        .frame(height: 1)
-
-                    Rectangle()
-                        .fill(
-                            LinearGradient(
-                                colors: [.clear, ThemeColors.accentBright, .clear],
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            )
-                        )
-                        .frame(width: geo.size.width, height: 1)
-                        .modifier(ScanAnimation())
-                }
+            // Metal-rendered scan line
+            ZStack {
+                Rectangle()
+                    .fill(ThemeColors.void4)
+                    .frame(height: 2)
+                MetalScanView()
+                    .frame(height: 4)
             }
-            .frame(width: 200, height: 1)
+            .frame(width: 200)
+            .clipShape(Rectangle())
         }
     }
 
     // MARK: - Main Content
+
     private var mainContent: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 24) {
@@ -76,6 +92,10 @@ struct ContentView: View {
                 footerSection
             }
             .padding(24)
+            #if os(iOS)
+            // Extra bottom padding clears the gear button (safe area handles home indicator)
+            .padding(.bottom, 72)
+            #endif
         }
         .background(ThemeColors.void0)
     }
@@ -129,11 +149,19 @@ struct ContentView: View {
         if vm.showRadar {
             SectionHeader(title: "RADAR & 7-DAY FORECAST", isCollapsed: $radarCollapsed)
             if !radarCollapsed {
+                #if os(iOS)
+                VStack(spacing: 16) {
+                    RadarMapView(vm: vm)
+                    ForecastView(vm: vm)
+                }
+                .transition(.opacity)
+                #else
                 HStack(alignment: .top, spacing: 16) {
                     RadarMapView(vm: vm).frame(maxWidth: .infinity)
                     ForecastView(vm: vm).frame(maxWidth: .infinity)
                 }
                 .transition(.opacity)
+                #endif
             }
         }
 
@@ -148,7 +176,7 @@ struct ContentView: View {
     private var footerSection: some View {
         VStack(spacing: 0) {
             Text(vm.quote)
-                .font(.system(size: 12, weight: .light, design: .default))
+                .font(.system(size: 12, weight: .light))
                 .italic()
                 .foregroundColor(ThemeColors.white.opacity(0.2))
                 .tracking(1)
@@ -175,47 +203,15 @@ struct ContentView: View {
         }
     }
 
-    // MARK: - Background Orbs
+    // MARK: - Background Orbs (Metal)
+
     private var backgroundOrbs: some View {
-        ZStack {
-            Circle()
-                .fill(Color(red: 0.486, green: 0.227, blue: 0.929).opacity(0.04))
-                .frame(width: 300, height: 300)
-                .blur(radius: 80)
-                .offset(x: -100, y: -200)
-
-            Circle()
-                .fill(Color(red: 0.659, green: 0.333, blue: 0.969).opacity(0.03))
-                .frame(width: 250, height: 250)
-                .blur(radius: 80)
-                .offset(x: 200, y: 100)
-
-            Circle()
-                .fill(Color.blue.opacity(0.02))
-                .frame(width: 350, height: 350)
-                .blur(radius: 80)
-                .offset(x: -50, y: 300)
-        }
-    }
-}
-
-// MARK: - Scan Animation
-struct ScanAnimation: ViewModifier {
-    @State private var offset: CGFloat = -200
-
-    func body(content: Content) -> some View {
-        content
-            .offset(x: offset)
-            .onAppear {
-                withAnimation(.easeInOut(duration: 1.5).repeatForever(autoreverses: false)) {
-                    offset = 200
-                }
-            }
+        MetalBackgroundView()
+            .allowsHitTesting(false)
+            .ignoresSafeArea()
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
+    static var previews: some View { ContentView() }
 }

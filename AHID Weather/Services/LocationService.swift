@@ -52,7 +52,12 @@ class LocationService: NSObject, ObservableObject {
         }
 
         let currentStatus = locationManager.authorizationStatus
-        guard currentStatus == .authorized || currentStatus == .authorizedAlways else {
+        #if os(macOS)
+        let isAuthorized = currentStatus == .authorized || currentStatus == .authorizedAlways
+        #else
+        let isAuthorized = currentStatus == .authorizedWhenInUse || currentStatus == .authorizedAlways
+        #endif
+        guard isAuthorized else {
             isLocating = false
             await reverseGeocode()
             return false

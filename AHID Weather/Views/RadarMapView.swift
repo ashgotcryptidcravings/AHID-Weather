@@ -9,6 +9,37 @@ typealias PlatformMapRepresentable = NSViewRepresentable
 typealias PlatformColor = NSColor
 #endif
 
+// MARK: - Shared tile session
+// One URLSession for all tile overlays. Connections are multiplexed and reused
+// across overlay swaps — no teardown/setup churn between animation frames,
+// which eliminates the nw_connection "unconnected / cannot write" log spam.
+private let sharedTileSession: URLSession = {
+    let cfg = URLSessionConfiguration.default
+    cfg.timeoutIntervalForRequest     = 10
+    cfg.timeoutIntervalForResource    = 30
+    cfg.httpMaximumConnectionsPerHost = 4
+    cfg.urlCache = URLCache(
+        memoryCapacity: 30 * 1024 * 1024,
+        diskCapacity:   80 * 1024 * 1024,
+        diskPath: "ahid.tile.cache"
+    )
+    return URLSession(configuration: cfg)
+}()
+
+// MARK: - Managed tile overlay
+// Routes all tile fetches through the shared session so TCP connections survive
+// overlay swaps. In-flight tasks are NOT cancelled on removal — their results are
+// simply discarded by MKMapKit once the overlay is off the map.
+final class ManagedTileOverlay: MKTileOverlay {
+    override func loadTile(at path: MKTileOverlayPath,
+                           result: @escaping (Data?, Error?) -> Void) {
+        let url = self.url(forTilePath: path)
+        sharedTileSession.dataTask(with: url) { data, _, error in
+            result(data, error)
+        }.resume()
+    }
+}
+
 // MARK: - MKMapView wrapper with tile overlay support
 struct RadarMapRepresentable: PlatformMapRepresentable {
     let center: CLLocationCoordinate2D
@@ -43,6 +74,8 @@ struct RadarMapRepresentable: PlatformMapRepresentable {
 
         #if canImport(AppKit)
         mv.appearance = NSAppearance(named: .darkAqua)
+        #else
+        mv.overrideUserInterfaceStyle = .dark
         #endif
 
         let region = MKCoordinateRegion(
@@ -68,11 +101,15 @@ struct RadarMapRepresentable: PlatformMapRepresentable {
         let newTemplate = tileURLTemplate ?? ""
         if context.coordinator.currentTemplate != newTemplate {
             context.coordinator.currentTemplate = newTemplate
+
+            // Remove the old overlay. In-flight tasks (if any) run to completion
+            // on their own — the shared URLSession connection is kept alive and
+            // reused for the next overlay's tiles immediately.
             mv.removeOverlays(mv.overlays)
             context.coordinator.tileRenderer = nil
 
             if !newTemplate.isEmpty {
-                let overlay = MKTileOverlay(urlTemplate: newTemplate)
+                let overlay = ManagedTileOverlay(urlTemplate: newTemplate)
                 overlay.canReplaceMapContent = false
                 mv.addOverlay(overlay, level: .aboveLabels)
             }

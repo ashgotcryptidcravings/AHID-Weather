@@ -8,5 +8,7 @@
 	<string>2</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>AHID Weather uses your location to display local current conditions, radar, and forecasts.</string>
+	<key>NSSupportsLiveActivities</key>
+	<true/>
 </dict>
 </plist>
